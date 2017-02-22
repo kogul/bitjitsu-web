@@ -143,15 +143,16 @@ table{
 }
 .successmsg{
 	padding-top:5px;
-	color: #FC0;
+	color: #f0e68c;
 	text-align: center;
-	border: solid 1px #f0e68c;
+	background-color: #474632;
+
 }
 .errormsg{
 	padding-top:5px;
-	color: #980027;
+	color: #f0e68c;
 	text-align: center;
-	border: solid 1px #C60033;
+	background-color: rgba(37,3,11,0.9);
 }
 .game{
 	border: solid 1px #FFF;

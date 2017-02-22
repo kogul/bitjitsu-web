@@ -35,11 +35,15 @@
         <li><a href="#">Home</a></li>
         <li><a href="#">Manual</a></li>
         <li><a href="<?php echo base_url("/user/leaderboard") ?>">Leaderboard</a></li>
-        <li><a href="<?php echo base_url("/user/index") ?>">Login</a></li>
-        <li><a href="#">Package</a></li>
-        <li><a href="<?php echo base_url("/user/gameplay") ?>">Gameplay</a></li>
-        <li><a href="<?php echo base_url("/user/submission") ?>">Submission</a></li>
-        <li><a href="#">Logout</a></li>
+          <?php if(!isset($userdata['logged_in'])) {
+              echo "<li><a href='".base_url('/user/index')."'>Login</a></li>";
+         }
+          if((isset($userdata['logged_in']))){
+          echo      "<li><a href='#'>Package</a></li>
+                    <li><a href='".base_url('/user/gameplay')."'>Gameplay</a></li>
+                    <li><a href='".base_url('/user/submission')."'>Submission</a></li>
+                    <li><a href='".base_url('/user/logout')."'>Logout</a></li>);";
+          }  ?>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

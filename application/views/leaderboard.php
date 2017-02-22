@@ -14,8 +14,8 @@
                 foreach ($scores as $score){ ?>
                 <tr>
                     <td><?php echo ++$i; ?></td>
-                    <td><?php echo $score->tname; ?></td>
-                    <td><?php echo $score->tscore; ?></td>
+                    <td><?php echo $score->name; ?></td>
+                    <td><?php echo $score->score; ?></td>
                 </tr>
                 <?php } ?>
             </table>
