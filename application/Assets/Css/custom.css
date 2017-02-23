@@ -1,26 +1,26 @@
 @font-face{
 	font-family: "go3";
-	src: url("Fonts/go3v2.ttf") format("truetype");
+	src: url("Fonts/Karate.ttf") format("truetype");
 }
 @font-face{
-	font-family: "Bebas";
-	src: url("Fonts/BEBAS___.ttf") format("truetype");
-}
-@font-face{
-	font-family:"Sheep";
-	src: url("Fonts/Mosk Normal 400.ttf") format("truetype");
+	font-family:"Yanone";
+	src: url("Fonts/YanoneKaffeesatz-Regular.ttf") format("truetype");
 }
 @font-face{
 	font-family:"rubic";
 	src: url("Fonts/Rubik-Regular.ttf") format("truetype");
 }
 @font-face{
-	font-family:"molot";
-	src: url("Fonts/molot.otf") format("opentype");
+	font-family:"Kreon";
+	src: url("Fonts/Kreon-Regular.ttf") format("truetype");
 }
 @font-face{
-	font-family:"mosk";
-	src: url("Fonts/Quango.otf") format("opentype");
+	font-family:"Marmelad";
+	src: url("Fonts/Marmelad-Regular.ttf") format("truetype");
+}
+@font-face{
+	font-family:"Chathura";
+	src: url("Fonts/Chathura-Regular.ttf") format("truetype");
 }
 .header{
 	color: #FC0;
@@ -32,12 +32,17 @@
 	height: 100%;
 	text-align: center;
 }
+.tagline{
+	font-size: 20px;
+}
 .head hr{
    border: solid 1px #FC0;
    width: 80%;
+	margin-bottom: 5px !important;
 }
 .head p{
-	font-family:"molot";
+	font-family:"Chathura";
+	font-size: 40px;
 }
 .header h1{
 	font-family: "go3";
@@ -49,21 +54,60 @@
 }
 .navpan{
 	border-radius: 0px;
+	height: 0px;
 	padding: 0px;
 }
-.navpan nav{
+.menubt{
+	z-index: 990;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+}
+.menubt>img{
+	height: 100%;
+	width: 100%;
+}
+.closebtn{
+	position: relative;
+	width: 100%;
+	background-color: #FC0;
+	height: 30px;
+	float: right;
+	margin-bottom: 20px;
+	padding: 20px !important;
+}
+.closebtn>img{
+	float: right;
+	position: absolute;
+	top: 7px;
+}
+.sidebar{
+	position: absolute;
+	left: -200px;
+	top: 0px;
+	z-index: 999;
 	background-color: #3F1F1F;
-	margin: 0px;
-	border: 0px;
-	border-radius: 0px;
+	width: 200px;
+	font-family: "Chathura";
+	font-size: 25px;
+	font-weight: bold;
+	height:auto;
+	padding: 5px;
+	text-align: left;
+	transition: linear 0.3s;
 }
-.navbar-nav>li>a{
-	font-family: "Sheep";
-	color: #f0e68c !important;
-    font-size: 15px;
+.sidebar>div{
+	padding: 15px;
 }
-.navbar-nav>li>a:hover{
-	color: #fc0 !important;
+.sidebar>div>a{
+	color: #f0e68c;
+	text-decoration: none;
+}
+.sidebar>div>a:hover{
+	color: #FC0;
+	text-decoration: none;
 }
 .cont{
 	background-image: url("Bg-Images/background1.jpg");
@@ -80,12 +124,16 @@
     color: #FFF;
 }
 .contarea h1{
-	font-family: "Bebas";
+	font-family: "Kreon";
 	text-align: center;
 	color: #f0e68c;
-	font-size: 45px;
+	font-size: 75px;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-delay: 0.3s;
+	-moz-animation-duration: 2s;
+	-moz-animation-delay: 0.3s;
 }
-.contarea>hr{
+.contarea hr{
 	width: 80%;
    border: solid 1px #FC0;
 }
@@ -116,30 +164,33 @@
 .lboardh{
 	padding: 10px;
     text-align: center;
-    border-bottom: solid 2px #f0e68c;
     color: #f0e68c;
 }
 .lcont{
 	text-align: center;
 }
-.lcont span:nth-child(2){
-	border-right: solid 1px #FFF;
-	border-left: solid 1px #FFF;
-}
 th{
 	color: #FC0;
-	font-family: "mosk";
+	font-family: "Chathura";
+	font-size: 40px;
 	text-align: center;
+	border: 0px !important;
+}
+td{
+	border-top: 0px !important;
+	font-size: 25px;
+	font-family: "Yanone";
 }
 tr{
 	text-align: center;
-}
-table{
-	border-color: #FC0;
+	background-color: rgba(177,148,4,0.2);
 }
 .lcont>hr{
 	margin: 0px;
-	border: solid 1px #898A8B;
+}
+.process{
+	text-align: center;
+	-webkit-animation-iteration-count: infinite ;
 }
 .successmsg{
 	padding-top:5px;
@@ -179,6 +230,25 @@ table{
 	background: transparent;
 	color: #f0e68c;
 	border: solid 1px #f0e68c;
+}
+.process{
+	font-size: 50px;
+}
+.pwrap{
+	text-align: center;
+	height: 400px;
+	padding-top: 150px;
+	font-family: "Chathura";
+}
+.pwrap a{
+	font-size: 40px;
+	text-decoration: none;
+	color: #FC0;
+}
+.pwrap a:hover{
+	font-size: 40px;
+	text-decoration: none;
+	color: #f0ad4e;
 }
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.cont{

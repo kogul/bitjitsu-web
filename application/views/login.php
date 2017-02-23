@@ -1,15 +1,15 @@
 <div class="col-md-offset-1 col-md-10 contarea lformc">
-    <h1>Login</h1>
-    <hr />
+    <h1 class="animated flipInX">Login</h1>
+    <hr class="animated zoomIn" />
     <?php if(isset($msg)){
       echo"  <div class='col-md-offset-1 col-md-10 errormsg'>
         <p>".$msg."</p>
     </div>"; }?>
     <form class="form-horizontal lform col-md-offset-1 col-md-10" method="post" action="/user/index">
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Team ID</label>
+            <label for="inputEmail3" class="col-sm-2 control-label">Team Name</label>
             <div class="col-sm-10">
-                <input type="text" name="usrname" class="form-control" id="inputEmail3" placeholder="Team ID">
+                <input type="text" name="usrname" class="form-control" id="inputEmail3" placeholder="Team Name">
             </div>
         </div>
         <div class="form-group">

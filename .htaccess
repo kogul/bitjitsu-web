@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-    
+
     RewriteEngine On
     RewriteBase /
 
@@ -9,4 +9,5 @@
 
     #map all request urls to a specific controller method
     RewriteRule ^(.*)$ index.php?/{controller}/{method}/$1 [L]
+
 </IfModule>

@@ -1,6 +1,6 @@
 <div class="col-md-offset-1 col-md-10 contarea lformc">
-    <h1>Submit Your File</h1>
-    <hr />
+    <h1 class="animated flipInX">Submit Your File</h1>
+    <hr class="animated zoomIn"/>
     <?php if(isset($msg)) {
         if (!strcmp($mtype, "error")) {
             echo "  <div class='col-md-offset-2 col-md-8 errormsg'>

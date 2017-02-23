@@ -1,9 +1,9 @@
 <div class="col-md-offset-1 col-md-10 contarea">
-    <h1>Leader Board</h1>
-    <hr/>
+    <h1 class="animated flipInX">Leader Board</h1>
+    <hr class="animated zoomIn"/>
     <div class="replace">
         <div class="col-md-offset-2 col-md-8">
-            <table class="table table-bordered">
+            <table class="table">
                 <tr>
                     <th>Position</th>
                     <th>Team Name</th>

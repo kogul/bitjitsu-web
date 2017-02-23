@@ -1,6 +1,6 @@
 <div class="replace">
 <div class="col-md-offset-2 col-md-8">
-    <table class="table table-bordered">
+    <table class="table">
         <tr>
             <th>Position</th>
             <th>Team Name</th>
