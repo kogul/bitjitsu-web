@@ -1,9 +1,20 @@
 <?php
 class user extends CI_Controller{
 
-
     function index(){
-
+        $data['userdata']=$this->session->userdata();
+        $this->load->view("hheader",$data);
+    }
+    function resources(){
+        $data['userdata']=$this->session->userdata();
+        $this->load->view("header",$data);
+        $this->load->view("resources");
+        $this->load->view("footer");
+    }
+    function login(){
+        if($this->session->userdata('logged_in')){
+            redirect('/');
+        }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         if($_POST){
@@ -28,28 +39,38 @@ class user extends CI_Controller{
         $this->load->view("footer");
     }
     function gameplay(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         $this->load->view("gameplay");
         $this->load->view("footer");
     }
     function spectator(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         $this->load->view("spectator");
         $this->load->view("footer");
     }
     function submission(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         if($_FILES){
             $file = $_FILES["filesub"]["name"];
             $tfile = $_FILES["filesub"]["tmp_name"];
+            $target= base_url("/bitjitsu-web/Submissions/");
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             $file="file".$this->session->userdata('id').".".$ext;
-            if(move_uploaded_file($tfile,base_url("/bitjitsu-web/Submissions/").$file)) {
-                $cont = file_get_contents(base_url("/bitjitsu-web/Submissions/") . $file);
+            if(move_uploaded_file($tfile,$target.$file)) {
+                $cont = file_get_contents($target.$file);
                 $cont = md5($cont);
                 $this->load->model("verify");
                 $oldcont = $this->verify->gethash($id);
@@ -83,9 +104,9 @@ class user extends CI_Controller{
 
                     $resp = curl_exec($ch);
                     $resp = json_decode($resp);
-                    $oldfile = base_url('/bitjitsu-web/Submissions/file'.$this->session->userdata('id').".".$ext);
-                    if(!rename($oldfile,base_url('/bitjitsu-web/Submissions/').$resp->data)){
-                        copy($oldfile,base_url('/bitjitsu-web/Submissions/').$resp->data);
+                    $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
+                    if(!rename($oldfile,$target.$resp->data)){
+                        copy($oldfile,$target.$resp->data);
                         unlink($oldfile);
                     }
                     redirect('/user/processing');
@@ -117,9 +138,9 @@ class user extends CI_Controller{
 
                         $resp = curl_exec($ch);
                         $resp = json_decode($resp);
-                        $oldfile = base_url('/bitjitsu-web/Submissions/file'.$this->session->userdata('id').".".$ext);
-                        if(!rename($oldfile,base_url('/bitjitsu-web/Submissions/').$resp->data)){
-                            copy($oldfile,base_url('/bitjitsu-web/Submissions/').$resp->data);
+                        $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
+                        if(!rename($oldfile,$target.$resp->data)){
+                            copy($oldfile,$target.$resp->data);
                             unlink($oldfile);
                         }
                         redirect('/user/processing');
@@ -137,6 +158,9 @@ class user extends CI_Controller{
         $this->load->view("footer");
     }
     function processing(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/');
+        }
         $this->load->model("login");
         $data['userdata']=$this->session->userdata();
        $this->load->view("header",$data);
@@ -145,6 +169,9 @@ class user extends CI_Controller{
        $this->load->view("footer");
     }
     function inewsub(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
         $obj = array('team_id' => intval($this->session->userdata('id')));
         $obj = json_encode($obj);
         $url = "http://foss.amritanet.edu:8888/api/newsub/";

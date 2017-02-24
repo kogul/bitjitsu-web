@@ -1,0 +1,263 @@
+@font-face{
+    font-family:"Ultra";
+    src: url("Fonts/Ultra.ttf") format("truetype");
+}
+@font-face{
+    font-family:"Paytone";
+    src: url("Fonts/PaytoneOne.ttf") format("truetype");
+}
+@font-face{
+    font-family:"Bungee";
+    src: url("Fonts/Bungee-Regular.ttf") format("truetype");
+}
+@font-face{
+    font-family:"Sacramento";
+    src: url("Fonts/Sacramento-Regular.ttf") format("truetype");
+}
+@font-face{
+    font-family:"Alfa";
+    src: url("Fonts/AlfaSlabOne-Regular.ttf") format("truetype");
+}
+@font-face{
+    font-family:"Oswald";
+    src: url("Fonts/Oswald-Bold.ttf") format("truetype");
+}
+@font-face{
+    font-family:"NTR";
+    src: url("Fonts/NTR-Regular.ttf") format("truetype");
+}
+.hheader{
+    height: 600px;
+    background-color: #000;
+    color: #fc0;
+    padding: 150px;
+    text-align: center;
+}
+.hhead>h1{
+    font-family: "Karate";
+    font-size: 95px;
+}
+.hhead>hr{
+    border: solid 1px #FC0;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-delay: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-delay: 1.5s;
+}
+.hhead>p{
+    font-family: "Chathura";
+    font-size: 50px;
+    font-weight: bold;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 0.5s;
+}
+.awrap{
+    background-color: #333535;
+    height: 300px;
+    padding: 20px;
+    text-align: center;
+
+}
+.awrap>p{
+    font-size: 20px;
+    color: #f0e68c;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-family: "Yanone";
+}
+.awrap>h4{
+    padding-top: 20px;
+    font-family: "Oswald";
+    font-size: 30px;
+    color: #FC0;
+}
+#downar{
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 1s;
+    -moz-animation-duration: 2s;
+    -moz-animation-delay: 1s;
+}
+.register{
+    height: auto;
+    text-align: center;
+    padding-bottom: 10px;
+    background-color: #FEFFE8;
+}
+.register>h1{
+    font-family: "Ultra";
+}
+.register>hr{
+    border: solid 1px #000;
+    width: 70%;
+}
+.rp{
+    padding: 10px;
+    color: #FFF;
+    background-color: rgba(0,0,0,0.7);
+    height: auto;
+    margin-bottom: 10px;
+}
+.rp>a{
+    font-family: "Bungee";
+    color: #FFF;
+    text-decoration: none;
+    cursor: pointer;
+}
+.rp>a:hover{
+    color: #FC0;
+}
+.rp>img{
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+.gamedes{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    background-image: url("Bg-Images/homebg.jpg");
+    background-color: #2B3339;
+    background-blend-mode: overlay;
+    background-size: cover;
+}
+.gcont{
+    background-color: rgba(43,51,57,0.8);
+    border-radius: 10px;
+}
+.gcont>h3{
+
+    color: #FC0;
+    font-family: "Alfa";
+    text-align: center;
+    font-size: 35px;
+}
+.gcont>hr{
+    border: solid 1px #FC0;
+    width: 70%;
+}
+.gcont>p{
+    color: #f0e68c;
+    font-family: "NTR";
+    font-size: 20px;
+}
+
+.gcont h4{
+    font-family:"Paytone";
+    color: #FC0;
+
+}
+.glink{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.glink img{
+    width: 100%;
+}
+.glns{
+   text-align: center;
+   background-color: rgba(148,150,107,0.7);
+}
+.glns h1{
+    font-family: "Bungee";
+    font-size: 40px;
+    color: #000;
+}
+.glns hr{
+    width: 70%;
+    border: solid 1px #000;
+}
+
+.glns h3{
+    font-family: "Yanone";
+    font-size: 30px;
+    color: #FFF;
+    cursor: pointer;
+}
+.glns a{
+    text-decoration: none;
+}
+.glns h3:hover{
+    text-decoration: none;
+    color: #FC0;
+}
+
+.fewmore{
+    background-color: #000;
+    padding:10px;
+    text-align: center;
+}
+.fewmore>h1{
+    color: #FC0;
+    font-family: "Sacramento";
+    font-size: 60px;
+}
+.fewmore>hr{
+    width: 70%;
+    border: solid 1px #FC0;
+}
+.olink{
+    background-color: #FC0;
+    color: #000;
+}
+.olink>a{
+    font-family: "Paytone";
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.olink>a:hover{
+    color: #585858;
+}
+.olink hr{
+    border: solid 1px #000;
+}
+.olink p{
+    font-family: "NTR";
+    font-size: 20px;
+}
+@media handheld,screen and (min-width: 618px) and (max-width: 991px) {
+.hheader{
+    padding: 100px;
+}
+    .awrap{
+        height: auto;
+    }
+    .register{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .register h1{
+        margin-top: 0px;
+    }
+    .gcont, .glns{
+        padding-top:10px;
+        padding-bottom: 10px;
+    }
+}
+@media handheld,screen and (max-width: 617px) {
+    .hheader{
+        padding: 20px;
+    }
+    .hheader h1{
+        font-size:45px;
+    }
+    .hhead>p{
+        font-size: 30px;
+    }
+    .awrap{
+        height: auto;
+    }
+    .register h1{
+        margin-top: 0px;
+    }
+    .register, .gcont, .glns{
+        padding-top:10px;
+        padding-bottom: 10px;
+    }
+    .fewmore{
+        height: auto;
+    }
+}

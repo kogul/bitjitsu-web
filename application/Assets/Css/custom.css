@@ -1,5 +1,5 @@
 @font-face{
-	font-family: "go3";
+	font-family: "Karate";
 	src: url("Fonts/Karate.ttf") format("truetype");
 }
 @font-face{
@@ -22,6 +22,7 @@
 	font-family:"Chathura";
 	src: url("Fonts/Chathura-Regular.ttf") format("truetype");
 }
+
 .header{
 	color: #FC0;
 	background-color: #000000;
@@ -45,7 +46,7 @@
 	font-size: 40px;
 }
 .header h1{
-	font-family: "go3";
+	font-family: "Karate";
 	font-size: 70px;
 }
 .header img{
@@ -88,7 +89,7 @@
 	left: -200px;
 	top: 0px;
 	z-index: 999;
-	background-color: #3F1F1F;
+	background-color: #351801;
 	width: 200px;
 	font-family: "Chathura";
 	font-size: 25px;
@@ -249,6 +250,29 @@ tr{
 	font-size: 40px;
 	text-decoration: none;
 	color: #f0ad4e;
+}
+.res>p{
+	font-family: "rubic";
+
+	color: #FFF;
+	font-size: 15px;
+}
+.res>h3{
+	color: #FC0;
+	font-family: "Yanone";
+	font-size: 35px;
+}
+.res ul {
+	list-style: none;
+}
+.res ul li a{
+	text-decoration: none;
+	color: #f0e68c;
+	font-family: "Kreon";
+	font-size: 20px;
+}
+.res ul li a:hover{
+	color: #FC0;
 }
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.cont{
