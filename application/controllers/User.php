@@ -44,20 +44,22 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
-        echo $this->input->get('json');
+        $data['file']= $this->input->get('json');
         $data['pagetitle'] = "Gameplay";
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
-        $this->load->view("gameplay");
+        $this->load->view("gameplay",$data);
         $this->load->view("footer");
     }
     function spectator(){
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
+        $data['pagetitle'] = "Spectator";
+        $data['file']= $this->input->get('json');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
-        $this->load->view("spectator");
+        $this->load->view("spectator",$data);
         $this->load->view("footer");
     }
     function submission(){
