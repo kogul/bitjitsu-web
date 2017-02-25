@@ -23,6 +23,11 @@
 	src: url("Fonts/Chathura-Regular.ttf") format("truetype");
 }
 
+@font-face{
+	font-family:"SpinCycle";
+	src: url("Fonts/SpinCycle.ttf") format("truetype");
+}
+
 .header{
 	color: #FC0;
 	background-color: #000000;
@@ -274,6 +279,7 @@ tr{
 .res ul li a:hover{
 	color: #FC0;
 }
+
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.cont{
 		height: 50%;

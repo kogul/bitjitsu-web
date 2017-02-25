@@ -13,7 +13,6 @@ class user extends CI_Controller{
         $this->load->view("footer");
     }
     function login(){
-        #$GLOBALS['redir_base']="/bitjitsu";
         if($this->session->userdata('logged_in')){
             redirect($GLOBALS['redir_base'].'/');
         }
@@ -22,7 +21,7 @@ class user extends CI_Controller{
         if($_POST){
             $post = filter_var_array($_POST,FILTER_SANITIZE_STRING);
             if(strlen($post['pass'])>6) {
-                $pass = md5($post['pass']);;
+                $pass = md5($post['pass']);
                 $this->load->model("login");
                 $udata=$this->login->ulogin($post['usrname'],$pass);
                 unset($udata['passwd']);
