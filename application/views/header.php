@@ -14,7 +14,7 @@
    <div class="sidebar">
     <div class="closebtn" id="close"><img src="<?php echo base_url('/application/Assets/Css/Bg-Images/ic_close_black_24dp_1x.png'); ?>"></div>
     <div><a href="<?php echo base_url("/user/"); ?>">Home</a></div>
-    <div><a href="#">Documentation</a></div>
+    <div><a target="_blank" href="<?php echo base_url('user/documentation') ?>">Documentation</a></div>
     <div><a href="<?php echo base_url("/user/leaderboard"); ?>">Leaderboard</a></div>
        <?php if(!isset($userdata['logged_in'])) {
            echo "<div><a href='".base_url('/user/login')."'>Login</a></div>";

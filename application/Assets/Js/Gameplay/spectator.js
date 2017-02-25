@@ -9,11 +9,8 @@ var stat=0;
 findbot();
 clearcan();
 createfood();
-createvirus();
-createfcirclr();
-createsquare();
-
 createbots();
+createvirus();
 updatestat();
 //check();
 function findbot(){
@@ -25,6 +22,7 @@ function findbot(){
 			break;
 		}
 	}
+	requestAnimationFrame(findbot);
 }
 function createvirus() {
 	for (var i =0; i<ob[stat].virus.length; i++){
@@ -57,45 +55,7 @@ function createbots() {
    // }
     requestAnimationFrame(createbots);
 }
-function createfcirclr() {
-    for(var i=0; i<ob[stat].ffieldcircle.length; i++){
-        if(ob[stat].ffieldcircle[i].origin[0]<ob[stat].bots[f].center[0]+(can.width/2)+(ob[stat].ffieldcircle[i].outerrad)&&ob[stat].ffieldcircle[i].origin[0]>ob[stat].bots[f].center[0]-(can.width/2)-(ob[stat].ffieldcircle[i].outerrad)&&ob[stat].ffieldcircle[i].origin[1]<ob[stat].bots[f].center[1]+(can.height/2)+(ob[stat].ffieldcircle[i].outerrad)&&ob[stat].ffieldcircle[i].origin[1]>ob[stat].bots[f].center[1]-(can.height/2)-(ob[stat].ffieldcircle[i].outerrad)) {
-           // ctx.clearRect(0,0,can.width,can.height);
-            ctx.beginPath();
-            ctx.arc(((ob[stat].ffieldcircle[i].origin[0]-ob[stat].bots[f].center[0]))+can.width/2, ((ob[stat].ffieldcircle[i].origin[1]-ob[stat].bots[f].center[1]))+can.height/2, ob[stat].ffieldcircle[i].outerrad, 0, 2 * Math.PI);
-            ctx.strokeStyle = "orange";
-            ctx.fillStyle = "orange";
-            ctx.fill();
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(((ob[stat].ffieldcircle[i].origin[0]-ob[stat].bots[f].center[0]))+(can.width/2),((ob[stat].ffieldcircle[i].origin[1]-ob[stat].bots[f].center[1]))+(can.height/2), ob[stat].ffieldcircle[i].innerrad, 0, 2 * Math.PI);
-            ctx.strokeStyle = "white";
-            ctx.fillStyle = "white";
-            ctx.fill();
-            ctx.stroke();
-        }
-    }
-    requestAnimationFrame(createfcirclr);
-}
-function createsquare() {
-        for(var i=0; i<ob[stat].ffieldsquare.length;i++){
-            if(ob[stat].ffieldsquare[i].origin[0]<ob[stat].bots[f].center[0]+(can.width/2)+(ob[stat].ffieldsquare[i].outerside)/2&&ob[stat].ffieldsquare[i].origin[0]>ob[stat].bots[f].center[0]-(can.width/2)-(ob[stat].ffieldsquare[i].outerside)/2&&ob[stat].ffieldsquare[i].origin[1]<ob[stat].bots[f].center[1]+(can.height/2)+(ob[stat].ffieldsquare[i].outerside)/2&&ob[stat].ffieldsquare[i].origin[1]>ob[stat].bots[f].center[1]-(can.height/2)-(ob[stat].ffieldsquare[i].outerside)/2) {
-                ctx.beginPath();
-                //ctx.rect((ob[stat].ffieldsquare[i].origin[0] - ob[stat].bots[f].center[0])+can.width/2,(ob[stat].ffieldsquare[i].origin[1] - ob[stat].bots[f].center[1])+can.height/2, ob[stat].ffieldsquare[i].outerside, ob[stat].ffieldsquare[i].outerside);
-                ctx.strokeStyle = "#FC0";
-                ctx.fillStyle = "#FC0";
-                ctx.fill();
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.rect((ob[stat].ffieldsquare[i].origin[0] - ob[stat].bots[f].center[0])+can.width/2,(ob[stat].ffieldsquare[i].origin[1] - ob[stat].bots[f].center[1])+can.height/2, ob[stat].ffieldsquare[i].innerside, ob[stat].ffieldsquare[i].innerside);
-                ctx.strokeStyle = "white";
-                ctx.fillStyle = "white";
-                ctx.fill();
-                ctx.stroke();
-            }
-        }
-        requestAnimationFrame(createsquare);
-}
+
 function createfood() {
       for(var i=0; i<ob[stat].food.length; i++){
           if(ob[stat].food[i][0]<ob[stat].bots[f].center[0]+(can.width/2)+10&&ob[stat].food[i][1]<ob[stat].bots[f].center[1]+(can.height/2)+10&&ob[stat].food[i][1]>ob[stat].bots[f].center[1]-(can.height/2)-10&&ob[stat].food[i][0]>ob[stat].bots[f].center[0]-(can.width/2)-10) {

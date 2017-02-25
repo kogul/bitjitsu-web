@@ -6,10 +6,8 @@ var ctx = can.getContext("2d");
 var stat = 0;
 clearf();
 
-createbots();
-createfcirclr();
-createsquare();
 createfood();
+createbots();
 createvirus();
 updatestat();
 
@@ -47,40 +45,6 @@ function createbots() {
     }
         requestAnimationFrame(createbots);
     }
-function createfcirclr() {
-    for(var i=0; i<ob[stat].ffieldcircle.length; i++){
-        ctx.beginPath();
-        ctx.arc((ob[stat].ffieldcircle[i].origin[0]*can.width/ob[stat].maxX),(ob[stat].ffieldcircle[i].origin[1]*can.height/ob[stat].maxY),ob[stat].ffieldcircle[i].outerrad*0.21,0,2*Math.PI);
-        ctx.fillStyle = "#FC0";
-        ctx.strokeStyle = "#FC0";
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc((ob[stat].ffieldcircle[i].origin[0]*can.width/ob[stat].maxX),(ob[stat].ffieldcircle[i].origin[1]*can.height/ob[stat].maxY),ob[stat].ffieldcircle[i].innerrad*0.21,0,2*Math.PI);
-        ctx.fillStyle = "white";
-        ctx.strokeStyle = "white";
-        ctx.fill();
-        ctx.stroke();
-    }
-        requestAnimationFrame(createfcirclr);
-}
-function createsquare() {
-        for(var i=0; i<ob[stat].ffieldsquare.length;i++){
-            ctx.beginPath();
-            ctx.rect((ob[stat].ffieldsquare[i].origin[0]*can.width/ob[stat].maxX),(ob[stat].ffieldsquare[i].origin[1]*can.height/ob[stat].maxY),ob[stat].ffieldsquare[i].outerside*0.21,ob[stat].ffieldsquare[i].outerside*0.21);
-            ctx.fillStyle = "red";
-            ctx.strokeStyle = "red";
-            ctx.fill();
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.rect((ob[stat].ffieldsquare[i].origin[0]*can.width/ob[stat].maxX),(ob[stat].ffieldsquare[i].origin[1]*can.height/ob[stat].maxY),ob[stat].ffieldsquare[i].innerside*0.21,ob[stat].ffieldsquare[i].innerside*0.21);
-            ctx.fillStyle = "white";
-            ctx.strokeStyle = "white";
-            ctx.fill();
-            ctx.stroke();
-        }
-    requestAnimationFrame(createsquare);
-}
 function createfood() {
       for(var i=0; i<ob[stat].food.length; i++){
           ctx.beginPath();

@@ -6,6 +6,10 @@ class user extends CI_Controller{
         $data['userdata']=$this->session->userdata();
         $this->load->view("hheader",$data);
     }
+    function documentation(){
+        $data['pagetitle'] = "Documentation";
+        $this->load->view("documentation",$data);
+    }
     function resources(){
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
