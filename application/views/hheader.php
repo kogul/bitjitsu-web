@@ -76,7 +76,7 @@
 </div>
 <div class="col-md-12 glink">
     <div class="col-md-4">
-        <img src="<?php echo base_url('/application/Assets/Css/Bg-Images/agar-io.png'); ?>">
+        <img src="<?php echo base_url('/application/Assets/Css/Bg-Images/Agar-io.png'); ?>">
     </div>
     <div class="col-md-8 glns">
          <h1>Try Out</h1>

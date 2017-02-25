@@ -1,4 +1,5 @@
 <?php
+$GLOBALS['redir_base']="/bitjitsu";
 class user extends CI_Controller{
 
     function index(){
@@ -12,8 +13,9 @@ class user extends CI_Controller{
         $this->load->view("footer");
     }
     function login(){
+        #$GLOBALS['redir_base']="/bitjitsu";
         if($this->session->userdata('logged_in')){
-            redirect('/');
+            redirect($GLOBALS['redir_base'].'/');
         }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -29,7 +31,7 @@ class user extends CI_Controller{
                 }else {
                     $udata['logged_in'] = TRUE;
                     $this->session->set_userdata($udata);
-                    redirect('/');
+                    redirect($GLOBALS['redir_base'].'/');
                 }
             }else{
                 $data['msg'] = "Invalid password";
@@ -40,7 +42,7 @@ class user extends CI_Controller{
     }
     function gameplay(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -49,7 +51,7 @@ class user extends CI_Controller{
     }
     function spectator(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -58,7 +60,7 @@ class user extends CI_Controller{
     }
     function submission(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
@@ -66,7 +68,8 @@ class user extends CI_Controller{
         if($_FILES){
             $file = $_FILES["filesub"]["name"];
             $tfile = $_FILES["filesub"]["tmp_name"];
-            $target= base_url("/bitjitsu-web/Submissions/");
+            $target= base_url("/srv/http/bitjitsu-web/Submissions/");
+            echo $target;
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             $file="file".$this->session->userdata('id').".".$ext;
             if(move_uploaded_file($tfile,$target.$file)) {
@@ -109,7 +112,7 @@ class user extends CI_Controller{
                         copy($oldfile,$target.$resp->data);
                         unlink($oldfile);
                     }
-                    redirect('/user/processing');
+                    redirect($GLOBALS['redir_base'].'/user/processing');
 
                 } else {
                     if (strcmp($cont, $oldcont['checksum'])) {
@@ -143,7 +146,7 @@ class user extends CI_Controller{
                             copy($oldfile,$target.$resp->data);
                             unlink($oldfile);
                         }
-                        redirect('/user/processing');
+                        redirect($GLOBALS['redir_base'].'/user/processing');
                     }else{
                         $data['msg'] = "This file has been submitted already";
                         $data['mtype'] = "error";
@@ -159,7 +162,7 @@ class user extends CI_Controller{
     }
     function processing(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/');
+            redirect($GLOBALS['redir_base'].'/');
         }
         $this->load->model("login");
         $data['userdata']=$this->session->userdata();
@@ -170,7 +173,7 @@ class user extends CI_Controller{
     }
     function inewsub(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $obj = array('team_id' => intval($this->session->userdata('id')));
         $obj = json_encode($obj);
@@ -205,6 +208,6 @@ class user extends CI_Controller{
     function logout(){
         $this->session->unset_userdata($this->session->userdata('id'));
         $this->session->sess_destroy();
-        redirect('/');
+        redirect($GLOBALS['redir_base'].'/');
     }
 }
