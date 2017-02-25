@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BitJitsu</title>
+    <title>BitJitsu | <?php echo $pagetitle; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/bootstrap.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/custom.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/home.css")?>">
@@ -90,7 +91,7 @@
   <h1>And a few more</h1>
     <hr/>
     <div class="col-md-3 olink">
-        <a><h3>The Archive</h3></a>
+        <a target="_blank" href="https://arrow.pythonanywhere.com/bit-jitsu/2016"><h3>The Archive</h3></a>
         <hr>
         <p>Have a look at the event that we conducted previously</p>
     </div>

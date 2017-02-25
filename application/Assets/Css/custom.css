@@ -245,6 +245,7 @@ tr{
 	font-size: 40px;
 	text-decoration: none;
 	color: #FC0;
+	cursor: pointer;
 }
 .pwrap a:hover{
 	font-size: 40px;
@@ -273,6 +274,9 @@ tr{
 }
 .res ul li a:hover{
 	color: #FC0;
+}
+.player{
+	width: auto !important;
 }
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.cont{
