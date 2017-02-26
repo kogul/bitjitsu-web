@@ -23,7 +23,6 @@
     }
     if((isset($userdata['logged_in']))){
         echo  "<div><a href='#'>Package</a></div>";
-        echo  "<div><a href='".base_url('/user/gameplay')."'>Gameplay</a></div>";
         echo  "<div><a href='".base_url('/user/submission')."'>Submission</a></div>";
         echo  "<div><a href='".base_url('/user/logout')."'>Logout</a></div>";
     }

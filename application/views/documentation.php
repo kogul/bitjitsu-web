@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Bitjitsu | <?php echo $pagetitle; ?></title>
+    <title>BitJitsu | <?php echo $pagetitle; ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/bootstrap.css")?>">
@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="dochead">
-    <h1>Bitjisu</h1>
+    <h1>BitJitsu</h1>
     <hr align="center">
     <h3>Documentation</h3>
 </div>
