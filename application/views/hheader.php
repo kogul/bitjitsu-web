@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BitJitsu</title>
+    <title>BitJitsu | <?php echo $pagetitle; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/bootstrap.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/custom.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/home.css")?>">
@@ -15,7 +16,7 @@
 <div class="sidebar">
     <div class="closebtn" id="close"><img src="<?php echo base_url('/application/Assets/Css/Bg-Images/ic_close_black_24dp_1x.png'); ?>"></div>
     <div><a href="<?php echo base_url("/user/"); ?>">Home</a></div>
-    <div><a href="#">Documentation</a></div>
+    <div><a target="_blank" href="<?php echo base_url("/user/documentation"); ?>">Documentation</a></div>
     <div><a href="<?php echo base_url("/user/leaderboard"); ?>">Leaderboard</a></div>
     <?php if(!isset($userdata['logged_in'])) {
         echo "<div><a href='".base_url('/user/login')."'>Login</a></div>";
@@ -90,12 +91,12 @@
   <h1>And a few more</h1>
     <hr/>
     <div class="col-md-3 olink">
-        <a><h3>The Archive</h3></a>
+        <a target="_blank" href="https://arrow.pythonanywhere.com/bit-jitsu/2016"><h3>The Archive</h3></a>
         <hr>
         <p>Have a look at the event that we conducted previously</p>
     </div>
     <div class="col-md-offset-1 col-md-4 olink">
-        <a><h3>Documentation</h3></a>
+        <a target="_blank" href="<?php echo base_url('user/documentation/'); ?>"><h3>Documentation</h3></a>
         <hr>
         <p>See the documentation of this game and get your hands dirty</p>
     </div>

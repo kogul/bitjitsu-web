@@ -3,8 +3,13 @@ $GLOBALS['redir_base']="/bitjitsu";
 class user extends CI_Controller{
 
     function index(){
+        $data['pagetitle'] = "Home";
         $data['userdata']=$this->session->userdata();
         $this->load->view("hheader",$data);
+    }
+    function documentation(){
+        $data['pagetitle'] = "Documentation";
+        $this->load->view("documentation",$data);
     }
     function resources(){
         $data['userdata']=$this->session->userdata();
@@ -17,6 +22,7 @@ class user extends CI_Controller{
         if($this->session->userdata('logged_in')){
             redirect($GLOBALS['redir_base'].'/');
         }
+        $data['pagetitle']="Login";
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         if($_POST){
@@ -44,24 +50,29 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
+        $data['file']= $this->input->get('json');
+        $data['pagetitle'] = "Gameplay";
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
-        $this->load->view("gameplay");
+        $this->load->view("gameplay",$data);
         $this->load->view("footer");
     }
     function spectator(){
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
+        $data['pagetitle'] = "Spectator";
+        $data['file']= $this->input->get('json');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
-        $this->load->view("spectator");
+        $this->load->view("spectator",$data);
         $this->load->view("footer");
     }
     function submission(){
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
+        $data['pagetitle'] = "Submission";
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -115,7 +126,7 @@ class user extends CI_Controller{
                     redirect($GLOBALS['redir_base'].'/user/processing');
 
                 } else {
-                    if (strcmp($cont, $oldcont['checksum'])) {
+                   // if (strcmp($cont, $oldcont['checksum'])) {
                         $fileinf = array(
                             'id' => $id,
                             'checksum' => $cont,
@@ -140,17 +151,17 @@ class user extends CI_Controller{
                         );
 
                         $resp = curl_exec($ch);
-                        $resp = json_decode($resp);
+                       $resp = json_decode($resp);
                         $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
                         if(!rename($oldfile,$target.$resp->data)){
                             copy($oldfile,$target.$resp->data);
                             unlink($oldfile);
                         }
                         redirect($GLOBALS['redir_base'].'/user/processing');
-                    }else{
+                    /*}else{
                         $data['msg'] = "This file has been submitted already";
                         $data['mtype'] = "error";
-                    }
+                    }*/
                 }
             }else{
                 $data['msg'] = "Your file has not been uploaded.";
@@ -164,6 +175,7 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/');
         }
+        $data['pagetitle'] = "Processing";
         $this->load->model("login");
         $data['userdata']=$this->session->userdata();
        $this->load->view("header",$data);
@@ -175,9 +187,27 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
-        $obj = array('team_id' => intval($this->session->userdata('id')));
-        $obj = json_encode($obj);
-        $url = "http://foss.amritanet.edu:8888/api/newsub/";
+        $this->load->model("verify");
+        $id = $this->session->userdata('id');
+        $check = $this->verify->getstatus($id);
+            $obj = array('team_id' => intval($id));
+            $obj = json_encode($obj);
+            $url = "http://foss.amritanet.edu:8888/api/newsub/";
+            $ch = curl_init($url);
+            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: '.strlen($obj))
+            );
+            $resp = curl_exec($ch);
+            echo $resp;
+    }
+    function track(){
+        $gid = $this->input->post('game_id');
+        $obj= json_encode($gid);
+        $url = "http://foss.amritanet.edu:8888/api/track/";
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
         curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -186,11 +216,11 @@ class user extends CI_Controller{
                 'Content-Type: application/json',
                 'Content-Length: '.strlen($obj))
         );
-
         $resp = curl_exec($ch);
         echo $resp;
     }
     function leaderboard(){
+        $data['pagetitle'] = "Leaderboard";
         $this->load->model("leader");
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
