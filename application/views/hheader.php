@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BitJitsu</title>
+    <title>BitJitsu | <?php echo $pagetitle; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/bootstrap.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/custom.css")?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url("/application/Assets/Css/home.css")?>">
@@ -15,7 +16,7 @@
 <div class="sidebar">
     <div class="closebtn" id="close"><img src="<?php echo base_url('/application/Assets/Css/Bg-Images/ic_close_black_24dp_1x.png'); ?>"></div>
     <div><a href="<?php echo base_url("/user/"); ?>">Home</a></div>
-    <div><a href="#">Documentation</a></div>
+    <div><a target="_blank" href="<?php echo base_url("/user/documentation"); ?>">Documentation</a></div>
     <div><a href="<?php echo base_url("/user/leaderboard"); ?>">Leaderboard</a></div>
     <?php if(!isset($userdata['logged_in'])) {
         echo "<div><a href='".base_url('/user/login')."'>Login</a></div>";
@@ -88,19 +89,26 @@
         <hr>
         <h4 style="text-align: center;">Yet we differ,</h4>
         <p>The game implementation for this event is inspired by Agar.io, but it is not <i>just another port of a popular game</i> The most obvious differences are:</p>
-        <ol>
-            <li><h4>Force Field</h4>
-            Either in a circular or square fashion is a water stream, which slows down your blob(cell) and keeps you moving in the stream unless your tendency to move out is greater than the existing force field.</li>
+        <ol>            
             <li><h4>Independent cells</h4>
             The original game and most "forks" don't allow you to control all cells in your control. All cells flock around one of the cells and move/operate in sync.
             <i>We also allow you to control your blobs separately when a virus splits you or you decide to split a cell.</i></li>
+            <li><h4>Splits are symmetric</h4>
+            Cells always split in to 2 equal halves, unlike agar.io.</li>
+            <li><h4>Merge whenever you want</h4>
+            Agar.io places some restrictions on merging cells, we don't<sup class="conditions"><a href="#no-of-spilts">1</a></sup>.</li>
+            <li><h4>Viruses are static</h4>
+            Player cannot <i>feed</i> viruses and create new ones.</li>
+            <li><h4>Direction of <i>ejected mass</i></h4>
+            Is clearly defined as the opposite of current movement direction.</li>            
         </ol>
+        <p>A detailed list of differences is available in the Documentation section.</p>
         
         <h3>Getting started</h3>
         <p>We strongly recommend that you play the Agar.io game on your browser before reading the documentation.</p>
         <ol>
-            <li>You must register your team on the <a href="#anokha-reg-box"><span class="anokha">anokha</span> 2017 site</a> to recieve a password for this site.</li>
-            <li>You can read about the Game and get started with the competition only if you have recieved a password in your email, after filling <a href="#gform-reg-box">this form</a>.</li>
+            <li>You must register your team on the <a href="#anokha-reg-box"><span class="anokha">anokha</span> 2017 site</a> <b>to recieve a password for this site, to access the Documentation</b>. Please fill <a href="#gform-reg-box">this form</a>.</li>
+            <li>Try out the tutorial and submit a dumb bot, and keep making it better.</li>
         </ol>
         </p>
     </div>
