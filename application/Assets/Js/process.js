@@ -2,7 +2,7 @@ var len = 0,i=0;
 var ob;
 $(document).ready(function() {
     $.ajax({
-        url: "/user/inewsub",
+        url: "/bitjitsu/user/inewsub",
         type: "post",
         dataType: "json",
         success: function (data) {
@@ -17,7 +17,7 @@ $(document).ready(function() {
 });
 function track(gid,ob){
     $.ajax({
-        url: "/user/track",
+        url: "/bitjitsu/user/track",
         type:"post",
         data: {game_id:gid},
         dataType: "json",
@@ -29,7 +29,7 @@ function track(gid,ob){
                     $('.pwrap').html('<h1 class="animated flipInX">Replays</h1>');
                     $('.pwrap').append('<hr class="animated zoomIn">');
                 }
-                $('.pwrap').append('<div class="animated slideInDown"><a target="_blank" href="/index.php/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a></div>');
+                $('.pwrap').append('<div class="animated slideInDown"><a target="_blank" href="/bitjitsu/index.php/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a></div>');
                 i++;
             }
             if(data.data == 'invalid'){
