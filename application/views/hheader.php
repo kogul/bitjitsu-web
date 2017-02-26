@@ -64,17 +64,17 @@
 </div>
 <div class="col-md-12 gamedes">
     <div class="col-md-offset-1 col-md-10 gcont">
-        <h3>The Game</h3>
+        <h3>The Game is based on Agar.io</h3>
         <hr>
-        <h4 style="text-align: center;">is based on Agar.io.</h4>
+        <h4 style="text-align: center;">About Agar.io</h4>
         <p>The word "Agar" is the name of the cell wall of certain algae.<br>
         Agar.io is an addictive online multiplayer game where you - as the player - control a single cell in the begining.<br></p>
         <blockquote>Hereafter, the words blobs and cells are used interchangeably, and mean the same.</blockquote>
         <p>The aim is to become the largest cell in the arena by eating other player's cells and randomly spawned food.<br>
         <b>In the original implementation</b>, players restart when all of their cells are swallowed by another player, but not in our implementation.</p>
-        <p>Special entities like <i>Viruses</i> can split cells larger than them into many pieces<sup class="conditions"><a href="#no-of-spilts">1</a></sup> (depending on the mass) and smaller cells can hide underneath a virus for protection against larger cells.<br>
+        <p>Special entities like <i>Viruses</i> can split cells larger than them into many pieces<sup class="conditions"><a href="#no-of-splits">1</a></sup> (depending on the mass) and smaller cells can hide underneath a virus for protection against larger cells.<br>
         Viruses are normally randomly generated, but players can make new viruses by ejecting a small fraction of a player's cell's mass into the virus a few times, causing the virus to split up (just like normal cells do).<br>
-        Players can split their cell into two, and one of the two evenly divided cells will be flung in the direction of the cursor. Any no. of splits can be made<sup class="conditions"><a href="#no-of-spilts">1</a></sup>, subject to the upper bound of 16 cells on the arena. The game is centered around this versatile move, which can be used,</p>
+        Players can split their cell into two, and one of the two evenly divided cells will be flung in the direction of the cursor. Any no. of splits can be made<sup class="conditions"><a href="#no-of-splits">1</a></sup>, subject to the upper bound of 16 cells on the arena. The game is centered around this versatile move, which can be used,</p>
         <ul>
             <li>to mount a <i>ranged attack</i> to swallow other smaller cells,</li>
             <li>to escape an attack from another cell,</li>
@@ -95,7 +95,7 @@
             <li><h4>Splits are symmetric</h4>
             Cells always split in to 2 equal halves, unlike agar.io.</li>
             <li><h4>Merge whenever you want</h4>
-            Agar.io places some restrictions on merging cells, we don't<sup class="conditions"><a href="#no-of-spilts">1</a></sup>.</li>
+            Agar.io places some restrictions on merging cells, we don't<sup class="conditions"><a href="#no-of-splits">1</a></sup>.</li>
             <li><h4>Viruses are static</h4>
             Player cannot <i>feed</i> viruses and create new ones.</li>
             <li><h4>Direction of <i>ejected mass</i></h4>
@@ -149,8 +149,15 @@
         </div>
     </a>
 </div>
-<div class="col-md-12 awrap" style="height: auto">
-    <p id="no-of-splits">An upper bound on the no. of blobs on the arena is 16. The no. of splits is unbounded, as cells can be merged.</p>
-    <p id="merging-n-splitting">A hunter blob must be slightly bigger than it's prey blob. Exact numbers are available in the docs.</p>
+<div class="col-md-12 footnote" style="height: auto">
+    <h4>Footnotes</h4>
+    <p id="no-of-splits">
+        <span>1</span>
+        An upper bound on the no. of blobs on the arena is 16. The no. of splits is unbounded, as cells can be merged.
+    </p>
+    <p id="merging-n-splitting">
+        <span>2</span>
+        A hunter blob must be slightly bigger than it's prey blob. Exact numbers are available in the docs.
+    </p>
 </div>
 </div>

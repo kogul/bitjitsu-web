@@ -1,6 +1,7 @@
 var len = 0,i=0;
 var ob;
 $(document).ready(function() {
+    console.log("will do sub");
     $.ajax({
         url: "/bitjitsu/user/inewsub",
         type: "post",
@@ -8,10 +9,13 @@ $(document).ready(function() {
         success: function (data) {
             console.log(data);
             len = data.data.game_ids.length;
-                ob = setInterval(function () {
-                     track(data.data.game_ids[i],ob);
-                }, 1000);
-
+            ob = setInterval(function () {
+                 track(data.data.game_ids[i],ob);
+            }, 1000);
+        },
+        error: function(data){
+            console.log(data);
+            alert('fail');
         }
     })
 });

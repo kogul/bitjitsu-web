@@ -24,7 +24,7 @@ class verify extends CI_Model{
         $this->db->update("teams",array("dirty"=>1));
     }
     function getstatus($id){
-        $this->db->select("dirty,running");
+        $this->db->select("dirty");
         $this->db->from("teams");
         $this->db->where("id",$id);
         $det = $this->db->get();

@@ -53,6 +53,25 @@
     -moz-animation-duration: 2s;
     -moz-animation-delay: 0.5s;
 }
+
+.footnote{
+    background-color: #333535;
+    font-size: 20px;
+    color: #f0e68c;
+    font-family: "Yanone";
+}
+
+.footnote span{
+    padding-right: 20px;
+}
+
+.footnote>h4{
+    text-align:  center;
+    font-family: "Oswald";
+    font-size: 30px;
+    color: #FC0;
+}
+
 .awrap{
     background-color: #333535;
     height: 300px;

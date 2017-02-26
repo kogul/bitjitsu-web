@@ -1,5 +1,6 @@
 <?php
 $GLOBALS['redir_base']="/bitjitsu";
+$GLOBALS['game_hostname']="foss.amritanet.edu";
 class user extends CI_Controller{
 
     function index(){
@@ -106,7 +107,7 @@ class user extends CI_Controller{
                         "team_id" => intval($this->session->userdata('id'))
                     );
                     $obj = json_encode($obj);
-                    $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                    $url = 'http://'.$GLOBALS['game_hostname'].':8888/api/getfilename/';
                     $ch = curl_init($url);
                     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
                     curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -140,7 +141,7 @@ class user extends CI_Controller{
                             "team_id" => intval($this->session->userdata('id'))
                         );
                         $obj = json_encode($obj);
-                        $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                        $url = 'http://'.$GLOBALS['game_hostname'].':8888/api/getfilename/';
                         $ch = curl_init($url);
                         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
                         curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -151,7 +152,7 @@ class user extends CI_Controller{
                         );
 
                         $resp = curl_exec($ch);
-                       $resp = json_decode($resp);
+                        $resp = json_decode($resp);
                         $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
                         if(!rename($oldfile,$target.$resp->data)){
                             copy($oldfile,$target.$resp->data);
@@ -187,27 +188,10 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
-        $this->load->model("verify");
         $id = $this->session->userdata('id');
-        $check = $this->verify->getstatus($id);
-            $obj = array('team_id' => intval($id));
-            $obj = json_encode($obj);
-            $url = "http://foss.amritanet.edu:8888/api/newsub/";
-            $ch = curl_init($url);
-            curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: '.strlen($obj))
-            );
-            $resp = curl_exec($ch);
-            echo $resp;
-    }
-    function track(){
-        $gid = $this->input->post('game_id');
-        $obj= json_encode($gid);
-        $url = "http://foss.amritanet.edu:8888/api/track/";
+        $obj = array('team_id' => intval($id));
+        $obj = json_encode($obj);
+        $url = "http://".$GLOBALS['game_hostname'].":8888/api/newsub/";
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
         curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -217,6 +201,23 @@ class user extends CI_Controller{
                 'Content-Length: '.strlen($obj))
         );
         $resp = curl_exec($ch);
+        header('Content-type:application/json;charset=utf-8');
+        echo $resp;
+    }
+    function track(){
+        $gid = $this->input->post('game_id');
+        $obj= json_encode($gid);
+        $url = "http://".$GLOBALS['game_hostname'].":8888/api/track/";
+        $ch = curl_init($url);
+        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: '.strlen($obj))
+        );
+        $resp = curl_exec($ch);
+        header('Content-type:application/json;charset=utf-8');
         echo $resp;
     }
     function leaderboard(){
