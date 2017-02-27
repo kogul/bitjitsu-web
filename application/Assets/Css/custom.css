@@ -301,6 +301,28 @@ tr{
 .pwrap p{
 	font-size: 40px;
 }
+.guide{
+	margin-top: 10px;
+	text-align: center;
+	background-color: rgba(255,204,0,0.2);
+}
+.guide h3{
+	color: #f0e68c;
+	font-family: "Kreon";
+}
+.guide hr{
+	border: solid 1px #f0e68c;
+}
+.guide p{
+	color: #fc0;
+	font-family: "Marmelad";
+}
+.framespec{
+	text-align: center !important;
+}
+.framespec>select{
+	color: #000;
+}
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.contarea{
 		height: 70%;

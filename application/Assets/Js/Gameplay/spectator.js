@@ -1,36 +1,52 @@
 var can = document.getElementById("spectator");
 var ctx = can.getContext("2d");
 var name = $('#teamname').val();
-var f=0;
-var stat=0;
-
-
+var f = 0,play=1,draw=0,skipr = 0;
+$(document).ready(skiprate);
+$(document).ready(function(){
+    $(document).on('change','#skiprate',skiprate);
+});
+function skiprate(){
+    skipr = $('#skiprate').val();
+    skipr = Number(skipr);
+}
 //update();
-findbot();
+var stat=0;
+core_redraw();
+function core_redraw(){
+	findbot();
+clearcan();
+iter_no();
+createfood();
+createvirus();
+createbots();
+updatestat();
+requestAnimationFrame(core_redraw);
+}
+
+
+function drew(){
+	findbot();
 clearcan();
 createfood();
-createbots();
 createvirus();
-updatestat();
-//check();
+createbots();
+draw =0;
+}
 function findbot(){
 	for(var i=0; i< ob[stat].bots.length; i++){
-	    console.log(ob[stat].bots[i].botname);
 		if(ob[stat].bots[i].botname == name){
 			f = i;
-			console.log(f);
 			break;
 		}
 	}
-	requestAnimationFrame(findbot);
 }
 function createvirus() {
+  if(play||draw){
 	for (var i =0; i<ob[stat].virus.length; i++){
 	    if(ob[stat].virus[i][0]<ob[stat].bots[f].center[0]+(can.width/2)+35&&ob[stat].virus[i][0]>ob[stat].bots[f].center[0]-(can.width/2)-35 &&ob[stat].virus[i][1]<ob[stat].bots[f].center[1]+(can.width/2)+35&&ob[stat].virus[i][1]>ob[stat].bots[f].center[1]-(can.width/2)-35) {
 
             ctx.beginPath();
-            console.log((ob[stat].virus[i][0]-ob[stat].bots[f].center[0])+(can.width)/2);
-            console.log((ob[stat].virus[i][1]-ob[stat].bots[f].center[1])+can.height/2);
             ctx.arc((ob[stat].virus[i][0]-ob[stat].bots[f].center[0])+(can.width)/2,(ob[stat].virus[i][1]-ob[stat].bots[f].center[1])+can.height/2, 35, 0, 2 * Math.PI);
             // if(yes == true) {
             ctx.strokeStyle = "blue";
@@ -39,13 +55,18 @@ function createvirus() {
             ctx.stroke();
             //}
         }
-
 	}
-	requestAnimationFrame(createvirus);
+}
+}
+function iter_no(){
+     ctx.beginPath();
+     ctx.font="15px Monospace";
+     ctx.fillStyle = "green";
+     ctx.fillText("#"+stat,0,15);
 }
 function createbots() {
     //for (var i=0; i<ob.bots.length; i++){
-
+    if(play||draw){
         ctx.beginPath();
         ctx.arc(can.width/2,can.height/2,ob[stat].bots[f].radius,0,2*Math.PI);
         ctx.strokeStyle = "green";
@@ -53,10 +74,10 @@ function createbots() {
         ctx.fill();
         ctx.stroke();
    // }
-    requestAnimationFrame(createbots);
+ }
 }
-
 function createfood() {
+  if(play || draw){
       for(var i=0; i<ob[stat].food.length; i++){
           if(ob[stat].food[i][0]<ob[stat].bots[f].center[0]+(can.width/2)+10&&ob[stat].food[i][1]<ob[stat].bots[f].center[1]+(can.height/2)+10&&ob[stat].food[i][1]>ob[stat].bots[f].center[1]-(can.height/2)-10&&ob[stat].food[i][0]>ob[stat].bots[f].center[0]-(can.width/2)-10) {
 
@@ -68,20 +89,48 @@ function createfood() {
               ctx.stroke();
           }
       }
-      requestAnimationFrame(createfood);
+    }
 }
 function updatestat() {
+  if (play) {
     if(stat < ob.length-1){
         stat++;
     }
-    requestAnimationFrame(updatestat);
+  }
 }
 function clearcan(){
+  if (play||draw) {
     if(stat < ob.length-1) {
         ctx.clearRect(0, 0, can.width, can.height);
     }
-    requestAnimationFrame(clearcan);
+  }
 }
+$(document).ready(function(){
+  
+   $('body').keyup(function(e){
+    if(e.keyCode == '32'){
+      play = !play;
+     }
+    if(!play){
+    if(e.keyCode == '68'){
+        console.log(stat);
+        console.log(skipr);
+      if((stat-skipr)>0){
+      stat-=skipr;
+      draw=1;
+      drew();
+    }
+     }
+    if(e.keyCode == '65'){
+      if((stat+skipr)<ob.length){
+      stat+=skipr;
+      draw=1;
+      drew();
+    }
+   }
+   }
+    });
+});
 /*function draw() {
 	ctx.clearRect(0,0,can.width,can.height);
 	ctx.beginPath();
