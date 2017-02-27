@@ -71,98 +71,122 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
+        date_default_timezone_set('Asia/Kolkata');
         $data['pagetitle'] = "Submission";
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
-        if($_FILES){
-            $file = $_FILES["filesub"]["name"];
-            $tfile = $_FILES["filesub"]["tmp_name"];
-            $target= base_url("/bitjitsu-web/Submissions/");
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
-            $file="file".$this->session->userdata('id').".".$ext;
-            if(move_uploaded_file($tfile,$target.$file)) {
-                $cont = file_get_contents($target.$file);
-                $cont = md5($cont);
-                $this->load->model("verify");
-                $oldcont = $this->verify->gethash($id);
-                if (empty($oldcont)) {
-                    $fileinf = array(
-                        'id' => $id,
-                        'checksum' => $cont,
-                        'platform' => $ext
-                    );
-                    $this->verify->inshash($fileinf);
-                    $this->verify->setdirty($id);
-                    $data['msg'] = "Your file has been uploaded";
-                    $data['mtype'] = "success";
+        $id = $this->session->userdata('id');
+        if($_FILES) {
+            $this->load->model("verify");
+            $lastsub = $this->verify->checksub($id);
+            $oldsub = new DateTime();
+            $oldsub->setTimestamp(strtotime($lastsub['time_sub']));
+            $newsub = new DateTime("now");
+            $split_time = $newsub->diff($oldsub);
+            $hour = $split_time->format("%H");
+            $mins = $split_time->format("%i");
+            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < 2)) {
+                if (($hour > 1 || $mins > 30)) {
+                    $this->verify->resetrate($id);
+                }
+                $file = $_FILES["filesub"]["name"];
+                $tfile = $_FILES["filesub"]["tmp_name"];
+                $target = base_url("/bitjitsu-web/Submissions/");
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                $file = "file" . $this->session->userdata('id') . "." . $ext;
+                if (move_uploaded_file($tfile, $target . $file)) {
+                    $cont = file_get_contents($target . $file);
+                    $cont = md5($cont);
+                    $oldcont = $this->verify->gethash($id);
 
-                    //make api call
-                    //get filename
-                    //rename()
-                    $obj = array("extension" =>$ext,
-                        "team_id" => intval($this->session->userdata('id'))
-                    );
-                    $obj = json_encode($obj);
-                    $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
-                    $ch = curl_init($url);
-                    curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
-                    curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
-                    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                            'Content-Type: application/json',
-                            'Content-Length: '.strlen($obj))
-                    );
-
-                    $resp = curl_exec($ch);
-                    $resp = json_decode($resp);
-                    $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
-                    if(!rename($oldfile,$target.$resp->data)){
-                        copy($oldfile,$target.$resp->data);
-                        unlink($oldfile);
-                    }
-                   redirect('/user/processing');
-
-                } else {
-                   // if (strcmp($cont, $oldcont['checksum'])) {
+                    if (empty($oldcont)) {
                         $fileinf = array(
                             'id' => $id,
                             'checksum' => $cont,
-                            'platform' => $ext
+                            'platform' => $ext,
+                            'time_sub' => date('m/d/Y G:i:s')
                         );
-                        $this->verify->puthash($fileinf);
+                        $this->verify->inshash($fileinf);
                         $this->verify->setdirty($id);
+                        $this->verify->uprate($id);
                         $data['msg'] = "Your file has been uploaded";
                         $data['mtype'] = "success";
-                        $obj = array("extension" =>$ext,
+
+                        //make api call
+                        //get filename
+                        //rename()
+                        $obj = array("extension" => $ext,
                             "team_id" => intval($this->session->userdata('id'))
                         );
                         $obj = json_encode($obj);
                         $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
                         $ch = curl_init($url);
-                        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
-                        curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
-                        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+                        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $obj);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                                 'Content-Type: application/json',
-                                'Content-Length: '.strlen($obj))
+                                'Content-Length: ' . strlen($obj))
                         );
 
                         $resp = curl_exec($ch);
-                       $resp = json_decode($resp);
-                        $oldfile = $target.'file'.$this->session->userdata('id').".".$ext;
-                        if(!rename($oldfile,$target.$resp->data)){
-                            copy($oldfile,$target.$resp->data);
+                        $resp = json_decode($resp);
+                        $oldfile = $target . 'file' . $this->session->userdata('id') . "." . $ext;
+                        if (!rename($oldfile, $target . $resp->data)) {
+                            copy($oldfile, $target . $resp->data);
                             unlink($oldfile);
                         }
                         redirect('/user/processing');
-                    /*}else{
-                        $data['msg'] = "This file has been submitted already";
-                        $data['mtype'] = "error";
-                    }*/
+
+                    } else {
+                        if (strcmp($cont, $oldcont['checksum'])) {
+                            $fileinf = array(
+                                'id' => $id,
+                                'checksum' => $cont,
+                                'platform' => $ext,
+                                'time_sub' => date('m/d/Y h:i:s')
+                            );
+                            $this->verify->puthash($fileinf);
+                            $this->verify->uprate($id);
+                            $this->verify->setdirty($id);
+
+                            $data['msg'] = "Your file has been uploaded";
+                            $data['mtype'] = "success";
+                            $obj = array("extension" => $ext,
+                                "team_id" => intval($this->session->userdata('id'))
+                            );
+                            $obj = json_encode($obj);
+                            $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                            $ch = curl_init($url);
+                            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, $obj);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                    'Content-Type: application/json',
+                                    'Content-Length: ' . strlen($obj))
+                            );
+
+                            $resp = curl_exec($ch);
+                            $resp = json_decode($resp);
+                            $oldfile = $target . 'file' . $this->session->userdata('id') . "." . $ext;
+                            if (!rename($oldfile, $target . $resp->data)) {
+                                copy($oldfile, $target . $resp->data);
+                                unlink($oldfile);
+                            }
+                            redirect('/user/processing');
+                        } else {
+                            $data['msg'] = "This file has been submitted already";
+                            $data['mtype'] = "error";
+                        }
+                    }
+                } else {
+                    $data['msg'] = "Your file has not been uploaded.";
+                    $data['mtype'] = "error";
                 }
-            }else{
-                $data['msg'] = "Your file has not been uploaded.";
+            }
+        else{
+                $data['msg'] = "You can make only 2 submissions in 30 minutes.";
                 $data['mtype'] = "error";
             }
         }
@@ -187,7 +211,6 @@ class user extends CI_Controller{
         }
         $this->load->model("verify");
         $id = $this->session->userdata('id');
-        $check = $this->verify->getstatus($id);
             $obj = array('team_id' => intval($id));
             $obj = json_encode($obj);
             $url = "http://foss.amritanet.edu:8888/api/newsub/";

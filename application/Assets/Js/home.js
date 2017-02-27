@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    $('.hheader').height(($(window).height())/1.5);
+    if($(window).width<991) {
+        $('.hheader').height(($(window).height()) / 2);
+    }
 });
 $(document).ready(function () {
     $('#downar').click(function () {
