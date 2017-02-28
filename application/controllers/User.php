@@ -1,6 +1,7 @@
 <?php
 $GLOBALS['redir_base']="/bitjitsu";
 $GLOBALS['game_hostname']="foss.amritanet.edu";
+$GLOBALS['rate_limit']=3;
 class user extends CI_Controller{
 
     function index(){
@@ -90,13 +91,13 @@ class user extends CI_Controller{
             $split_time = $newsub->diff($oldsub);
             $hour = $split_time->format("%H");
             $mins = $split_time->format("%i");
-            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < 2)) {
+            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < $GLOBALS['rate_limit'])) {
                 if (($hour > 1 || $mins > 30)) {
                     $this->verify->resetrate($id);
                 }
                 $file = $_FILES["filesub"]["name"];
                 $tfile = $_FILES["filesub"]["tmp_name"];
-                $target = base_url("/bitjitsu-web/Submissions/");
+                $target = base_url("/srv/http/bitjitsu-web/Submissions/");
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
                 $file = "file" . $this->session->userdata('id') . "." . $ext;
                 if (move_uploaded_file($tfile, $target . $file)) {
@@ -190,7 +191,7 @@ class user extends CI_Controller{
                 }
             }
         else{
-                $data['msg'] = "You can make only 2 submissions in 30 minutes.";
+                $data['msg'] = "You can make only ".$GLOBALS['rate_limit']." submissions in 30 minutes.";
                 $data['mtype'] = "error";
             }
         }
@@ -226,6 +227,7 @@ class user extends CI_Controller{
                     'Content-Length: '.strlen($obj))
             );
             $resp = curl_exec($ch);
+            header('Content-type:application/json;charset=utf-8');
             echo $resp;
     }
     function track(){
@@ -247,13 +249,14 @@ class user extends CI_Controller{
         header('Content-type:application/json;charset=utf-8');
         echo $resp;
     }
-    function getsummery(){
+    function getsummary(){
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
         $gid = $this->input->post('game_id');
         $this->load->model("leader");
         $summery = $this->leader->getsum($gid);
+        header('Content-type:application/json;charset=utf-8');
         echo json_encode($summery);
     }
     function leaderboard(){
