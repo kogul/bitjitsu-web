@@ -323,6 +323,10 @@ tr{
 .framespec>select{
 	color: #000;
 }
+#platform{
+	background-color: #000;
+	color: #FC0;
+}
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.contarea{
 		height: 70%;

@@ -35,7 +35,7 @@ draw =0;
 function iter_no(){
 	ctx.beginPath();
 	ctx.font="15px Monospace";
-	ctx.fillStyle = "green";
+	ctx.fillStyle = "#FC0";
 	ctx.fillText("#"+stat,0,15);
 }
 function clearf(){

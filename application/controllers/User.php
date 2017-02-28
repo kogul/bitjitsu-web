@@ -77,7 +77,8 @@ class user extends CI_Controller{
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         $id = $this->session->userdata('id');
-        if($_FILES) {
+        if($_POST) {
+            $plat = $this->input->post('platform');
             $this->load->model("verify");
             $lastsub = $this->verify->checksub($id);
             $oldsub = new DateTime();
@@ -104,7 +105,7 @@ class user extends CI_Controller{
                         $fileinf = array(
                             'id' => $id,
                             'checksum' => $cont,
-                            'platform' => $ext,
+                            'platform' => $plat,
                             'time_sub' => date('m/d/Y G:i:s')
                         );
                         $this->verify->inshash($fileinf);
@@ -144,7 +145,7 @@ class user extends CI_Controller{
                             $fileinf = array(
                                 'id' => $id,
                                 'checksum' => $cont,
-                                'platform' => $ext,
+                                'platform' => $plat,
                                 'time_sub' => date('m/d/Y h:i:s')
                             );
                             $this->verify->puthash($fileinf);
@@ -226,6 +227,9 @@ class user extends CI_Controller{
             echo $resp;
     }
     function track(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
         $gid = $this->input->post('game_id');
         $obj= json_encode($gid);
         $url = "http://foss.amritanet.edu:8888/api/track/";
@@ -239,6 +243,15 @@ class user extends CI_Controller{
         );
         $resp = curl_exec($ch);
         echo $resp;
+    }
+    function getsummery(){
+        if(!($this->session->userdata('logged_in'))){
+            redirect('/user/login');
+        }
+        $gid = $this->input->post('game_id');
+        $this->load->model("leader");
+        $summery = $this->leader->getsum($gid);
+        echo json_encode($summery);
     }
     function leaderboard(){
         $data['pagetitle'] = "Leaderboard";

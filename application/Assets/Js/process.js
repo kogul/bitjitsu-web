@@ -1,14 +1,13 @@
 var len = 0,i=0,j=1;
 var done = new Array();
-var ob;
+var ob, back;
 $(document).ready(function() {
     $.ajax({
         url: "/user/inewsub",
         type: "post",
         dataType: "json",
         success: function (data) {
-            console.log(data);
-            len = data.data.game_ids.length;
+            back = data;
             for (var ind = 0; ind < data.data.game_ids.length; ind++) {
                  if(ind == 0) {
                     $('.pwrap').css("padding-top", "10px");
@@ -32,21 +31,22 @@ function track(gid,ob){
         data: {game_id:gid},
         dataType: "json",
         success: function(data){
-            console.log(data);
             if(data.status == 'error' || data.status == 'fail'){
-                $('.pwrap').html('<h1>There has been some internal error. Please report to organisers.</h1>');
+                $('.pwrap').html('<h1 style="font-size: 30px">There has been some internal error. Please report to ananya95@gmail.com</h1>');
+                $('.pwrap').append('<p>Your game ids are:</p>');
+                for(var count=0; count<back.data.game_ids.length; count++){
+                    $('.pwrap').append('<p>'+back.data.game_ids[count]+'</p>');
+                }
                 clearInterval(ob);
                 clearint();
             }
             if(data.data == 'wait'){
-                console.log("wait: "+i);
                 seti();
                 $('#replay'+i).html('waiting');
             }
             if(data.data == 'completed'){
-                console.log("i: "+i);
                 $('#replay'+i).html('<a target="_blank" href="/index.php/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a>');
-                console.log("inside: "+done.length);
+                getsummery(gid,i);
                 if(done.length == 1){
                     clearint();
                 }
@@ -58,7 +58,11 @@ function track(gid,ob){
                 $('.pwrap').css("padding-top","10px");
                 $('.pwrap').html('<h1 class="animated flipInX">Replays</h1>');
                 $('.pwrap').append('<hr class="animated zoomIn">');
-                $('.pwrap').append('<p>There has been some internal error. Please report to organisers.</p>');
+                $('.pwrap').append('<p>There has been some internal error. Please report to ananya95@gmail.com</p>');
+                $('.pwrap').append('<p>Your game ids are:</p>');
+                for(var count=0; count<back.data.game_ids.length; count++){
+                    $('.pwrap').append('<p>'+back.data.game_ids[count]+'</p>');
+                }
             }
         }
     });
@@ -74,7 +78,17 @@ function seti() {
     j++;
 }
 function clearint() {
-    console.log("Clear: "+done.length);
-    console.log("i: "+i);
    clearInterval(ob);
+}
+function getsummery(gid,num){
+    $.ajax({
+        url:"/user/getsummery",
+        type:"post",
+        data: {game_id: gid},
+        dataType: "json",
+        success:function (data) {
+           $('#replay'+num).append('<p class="animated fadeInDown" style="font-size: 25px">'+data.summary+'</p>');
+
+        }
+    });
 }
