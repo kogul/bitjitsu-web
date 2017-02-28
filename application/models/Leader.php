@@ -8,5 +8,13 @@ class leader extends CI_Model{
         $scores = $this->db->get();
         return $scores->result();
     }
+    function getsum($gid){
+        $this->load->database();
+        $this->db->select("*");
+        $this->db->from("games");
+        $this->db->where("id",$gid);
+        $summery = $this->db->get();
+        return $summery->row_array();
+    }
 }
 ?>

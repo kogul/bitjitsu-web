@@ -186,6 +186,7 @@ td{
 	border-top: 0px !important;
 	font-size: 25px;
 	font-family: "Yanone";
+	color: #FFF;
 }
 tr{
 	text-align: center;
@@ -242,7 +243,7 @@ tr{
 }
 .pwrap{
 	text-align: center;
-	height: 400px;
+	height: auto;
 	padding-top: 150px;
 	font-family: "Chathura";
 }
@@ -253,7 +254,7 @@ tr{
 	cursor: pointer;
 }
 .pwrap a:hover{
-	font-size: 40px;
+	font-size: 50px;
 	text-decoration: none;
 	color: #f0ad4e;
 }
@@ -304,6 +305,35 @@ tr{
 	font-size: 30px;
 }
 
+.pwrap p{
+	font-size: 40px;
+}
+.guide{
+	margin-top: 10px;
+	text-align: center;
+	background-color: rgba(255,204,0,0.2);
+}
+.guide h3{
+	color: #f0e68c;
+	font-family: "Kreon";
+}
+.guide hr{
+	border: solid 1px #f0e68c;
+}
+.guide p{
+	color: #fc0;
+	font-family: "Marmelad";
+}
+.framespec{
+	text-align: center !important;
+}
+.framespec>select{
+	color: #000;
+}
+#platform{
+	background-color: #000;
+	color: #FC0;
+}
 @media handheld,screen and (min-width: 618px) and (max-width: 991px){
 	.contarea{
 		height: 70%;
