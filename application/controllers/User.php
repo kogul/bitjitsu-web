@@ -253,6 +253,27 @@ class user extends CI_Controller{
         $summery = $this->leader->getsum($gid);
         echo json_encode($summery);
     }
+    function selectcount(){
+        $data['pagetitle'] = "Replay";
+        $data['userdata'] = $this->session->userdata();
+        $this->load->model('leader');
+        $max = $this->leader->getcount($this->session->userdata('id'));
+        $data['max'] = $max['sub_count'];
+      $this->load->view('header',$data);
+      $this->load->view('selectreplay',$data);
+      $this->load->view('footer');
+    }
+    function fetchreplay(){
+       $subnum = $this->input->post("sub_num");
+       $data['userdata'] = $this->session->userdata();
+       $data['pagetitle'] = "Replays";
+        $this->load->model('leader');
+       $replays = $this->leader->getreplays($this->session->userdata('id'),$subnum);
+       $data['replaylist'] = $replays;
+       $this->load->view("header",$data);
+       $this->load->view("fetchedreplay",$data);
+       $this->load->view("footer");
+    }
     function leaderboard(){
         $data['pagetitle'] = "Leaderboard";
         $this->load->model("leader");

@@ -253,6 +253,9 @@ tr{
 	text-decoration: none;
 	color: #f0ad4e;
 }
+.pwrap p{
+	font-size: 20px !important;
+}
 .res>p{
 	font-family: "rubic";
 

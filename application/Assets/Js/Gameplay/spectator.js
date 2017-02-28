@@ -107,7 +107,7 @@ function clearcan(){
 }
 $(document).ready(function(){
   
-   $('body').keyup(function(e){
+   $('body').keydown(function(e){
     if(e.keyCode == '32'){
       play = !play;
      }
