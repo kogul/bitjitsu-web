@@ -8,4 +8,6 @@
 Submissions/*
 system/application/*
 .editorconfig
-Submissions/*
+submissions/*
+replays/*
+game_logs/*
