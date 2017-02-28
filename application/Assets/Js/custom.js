@@ -1,7 +1,12 @@
 $(document).ready(function () {
     setInterval(updatelb,200000);
 });
-
+$(document).ready(function(){
+        var maxhigh = $(window).height();
+        if($('.cont').height()<maxhigh){
+            $('.cont').height(maxhigh);
+        }
+});
  function updatelb() {
     $.ajax({
         url: "/index.php/user/update",
