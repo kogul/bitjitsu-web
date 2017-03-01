@@ -30,18 +30,6 @@ class verify extends CI_Model{
         $this->db->set("sub_count","sub_count+1",FALSE);
         $this->db->update("teams",array("dirty"=>1));
     }
-    function getFileName($id){
-        $this->db->where("id",$id);
-        $this->db->from("teams");
-        $this->db->select("source");
-        $res = $this->db->get()->row_array();
-        return $res["source"].'.py';
-    }
-    function upFileName($id, $newFileName){
-        $this->db->where("id",$id);
-        $this->db->set("source", $newFileName);
-        $this->db->update("teams");
-    }
     function checksub($id){
         $this->db->select("rate_limit,time_sub");
         $this->db->from("teams");

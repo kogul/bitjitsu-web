@@ -1,8 +1,8 @@
 <?php
-$GLOBALS['redir_base']="/bitjitsu";
+$GLOBALS['redir_base']="";
 $GLOBALS['game_hostname']="foss.amritanet.edu:8888";
 $GLOBALS['rate_limit']=30;
-$GLOBALS['submission_dir']="/var/www/bitjitsu/2017/public/submissions/";
+$GLOBALS['submission_dir']="/bitjitsu-web/submissions/";
 class user extends CI_Controller{
 
     function index(){
@@ -53,7 +53,10 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
+        $this->load->model("leader");
         $data['file']= $this->input->get('json');
+        $sum = $this->leader->getsum($data['file']);
+        $data['summary'] = $sum['summary'];
         $data['pagetitle'] = "Gameplay";
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -65,7 +68,10 @@ class user extends CI_Controller{
             redirect($GLOBALS['redir_base'].'/user/login');
         }
         $data['pagetitle'] = "Spectator";
+        $this->load->model("leader");
         $data['file']= $this->input->get('json');
+        $sum = $this->leader->getsum($data['file']);
+        $data['summary'] = $sum['summary'];
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
         $this->load->view("spectator",$data);
@@ -96,7 +102,7 @@ class user extends CI_Controller{
             $file = $_FILES["filesub"]["name"];
             $tfile = $_FILES["filesub"]["tmp_name"];
             $ext = pathinfo($file, PATHINFO_EXTENSION);
-            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < 20)) {
+            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < $GLOBALS['rate_limit'])) {
                 if (($hour > 1 || $mins > 30)) {
                     $this->verify->resetrate($id);
                 }
@@ -139,7 +145,6 @@ class user extends CI_Controller{
                         $data['msg'] = "Your file has been uploaded";
                         $data['mtype'] = "success";
                         redirect($GLOBALS['redir_base'].'/user/processing');
-
                     } else {
                         if (strcmp($cont, $oldcont['checksum'])) {
                             $old = $this->verify->getsource($id);
@@ -256,6 +261,7 @@ class user extends CI_Controller{
         $this->load->model('leader');
        $replays = $this->leader->getreplays($this->session->userdata('id'),$subnum);
        $data['replaylist'] = $replays;
+       $data['subcount'] = $subnum;
        $this->load->view("header",$data);
        $this->load->view("fetchedreplay",$data);
        $this->load->view("footer");

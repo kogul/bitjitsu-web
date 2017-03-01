@@ -135,7 +135,7 @@
             <p>Have a look at the event that we conducted in <span class="anokha">anokha</span> 2016</p>
         </div>
     </a>
-    <a href="#">
+    <a href="<?php echo base_url("user/documentation");?>">
         <div class="col-md-offset-1 col-md-4 olink">
             <h3>Documentation</h3>
             <hr>
@@ -162,3 +162,4 @@
     </p>
 </div>
 </div>
+</body>
