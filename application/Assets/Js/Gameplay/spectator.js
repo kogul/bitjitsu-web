@@ -12,7 +12,9 @@ function skiprate(){
 }
 //update();
 var stat=0;
-core_redraw();
+$(document).ready(function () {
+    core_redraw();
+});
 function core_redraw(){
 	findbot();
 clearcan();

@@ -18,6 +18,11 @@
             <p>Blue: Virus</p>
             <p>Green: Bots</p>
             </div>
+            <div class="col-md-12">
+                <h3>Summary</h3>
+                <hr>
+                <p><?php echo $summary; ?></p>
+            </div>
         </div>
     </div>
     <canvas id="normal" class="game" height="600px" width="1066px">

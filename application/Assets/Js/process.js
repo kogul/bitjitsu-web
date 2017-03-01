@@ -14,6 +14,7 @@ $(document).ready(function() {
                     $('.pwrap').css("padding-top", "10px");
                     $('.pwrap').html('<h1 class="animated flipInX">Replays</h1>');
                     $('.pwrap').append('<hr class="animated zoomIn">');
+                    $('.pwrap').append('<h4 class="oldredirect animated fadeInUp">Every game takes around 2 minutes. The game is running in a dual core server, 2 games in parallel. <a target="_blank" href="/user/selectcount">Click here to see your old replays</a></h4>');
                 }
                  $('.pwrap').append('<p class="animated slideInDown" id="replay'+ind+'">Loading</p>');
                  done[ind] = ind;
