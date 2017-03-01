@@ -5,7 +5,7 @@
        <div class="col-md-6">
            <lable>Submission No:</lable>
            <select name="sub_num" id="platform">
-             <?php for($i = 1; $i<=$max; $i++)
+             <?php for($i = $max; $i>0; $i--)
                echo "<option value='".$i."'>".$i."</option>";
              ?>
          </select>
