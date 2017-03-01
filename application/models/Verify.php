@@ -11,6 +11,13 @@ class verify extends CI_Model{
         $filedet = $this->db->get();
         return $filedet->row_array();
     }
+    function getsource($teamid){
+        $this->db->select("*");
+        $this->db->from("teams");
+        $this->db->where("id",$teamid);
+        $source = $this->db->get();
+        return $source->row_array();
+    }
     function puthash($finf){
         $this->db->where("id",$finf['id']);
         $this->db->update("teams",$finf);
