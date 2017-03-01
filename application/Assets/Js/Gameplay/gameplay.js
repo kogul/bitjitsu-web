@@ -109,12 +109,13 @@ function updatestat() {
 $(document).ready(function(){
   
    $('body').keydown(function(e){
+       e.preventDefault();
     if(e.keyCode == '32'){
       play = !play;
      }
     if(!play){
 
-    if(e.keyCode == '68'){
+    if(e.keyCode == '65'){
         console.log(fr);
         console.log(stat);
       if((stat-fr)>0){
@@ -123,7 +124,7 @@ $(document).ready(function(){
       drew();
     }
      }
-    if(e.keyCode == '65'){
+    if(e.keyCode == '68'){
       console.log(stat);
       console.log(fr);
       if((stat + fr)<ob.length){

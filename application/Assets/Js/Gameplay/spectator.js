@@ -107,11 +107,12 @@ function clearcan(){
 $(document).ready(function(){
   
    $('body').keydown(function(e){
+       e.preventDefault();
     if(e.keyCode == '32'){
       play = !play;
      }
     if(!play){
-    if(e.keyCode == '68'){
+    if(e.keyCode == '65'){
         console.log(stat);
         console.log(skipr);
       if((stat-skipr)>0){
@@ -120,7 +121,7 @@ $(document).ready(function(){
       drew();
     }
      }
-    if(e.keyCode == '65'){
+    if(e.keyCode == '68'){
       if((stat+skipr)<ob.length){
       stat+=skipr;
       draw=1;
