@@ -1,8 +1,5 @@
 <?php
 class leader extends CI_Model{
-    function __construct(){
-
-    }
 
     function getleader(){
         $this->load->database();
