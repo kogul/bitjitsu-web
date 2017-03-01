@@ -19,8 +19,10 @@ class verify extends CI_Model{
         return $source->row_array();
     }
     function puthash($finf){
+        $this->db->trans_start();
         $this->db->where("id",$finf['id']);
         $this->db->update("teams",$finf);
+        $this->db->trans_complete();
     }
     function inshash($finf){
         $this->db->insert("teams",$finf);
