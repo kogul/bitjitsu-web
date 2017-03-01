@@ -19,7 +19,7 @@
             <p>Green: Bots</p>
             </div>
             <div class="col-md-4">
-                <h3 id="iter_num" style="padding-top: 25px"></h3>
+                <h3 id="iter_num"></h3>
 
                     <hr>
                     <p><?php echo $summary; ?></p>

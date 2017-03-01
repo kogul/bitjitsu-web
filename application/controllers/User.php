@@ -1,8 +1,8 @@
 <?php
-$GLOBALS['redir_base']="";
-$GLOBALS['game_hostname']="foss.amritanet.edu:8888";
+$GLOBALS['redir_base']="/bitjitsu";
+$GLOBALS['game_hostname']="localhost:8888";
 $GLOBALS['rate_limit']=30;
-$GLOBALS['submission_dir']="/bitjitsu-web/submissions/";
+$GLOBALS['submission_dir']="/srv/http/bitjitsu-web/submissions/";
 class user extends CI_Controller{
 
     function index(){
