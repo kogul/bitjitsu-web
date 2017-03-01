@@ -4,24 +4,26 @@
             <a class="btn mbtn" href="<?php echo base_url('/user/spectator/?json='.$file); ?>">Switch to Spectator mode</a>
         </div>
         <div class="guide col-md-offset-1 col-md-10">
-            <div class="col-md-6">
+            <div class="col-md-4">
             <h3>Controls</h3>
             <hr>
             <p>Spacebar: Pause/Resume</p>
             <p>When Paused -  a:Next frame  d:previous frame</p>
                 <p>Frame skip rate can be chosen from the options given below</p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
             <h3>Replay Specifications</h3>
             <hr>
             <p>Red: Food</p>
             <p>Blue: Virus</p>
             <p>Green: Bots</p>
             </div>
-            <div class="col-md-12">
-                <h3>Summary</h3>
-                <hr>
-                <p><?php echo $summary; ?></p>
+            <div class="col-md-4">
+                <h3 id="iter_num" style="padding-top: 25px"></h3>
+
+                    <hr>
+                    <p><?php echo $summary; ?></p>
+
             </div>
         </div>
     </div>

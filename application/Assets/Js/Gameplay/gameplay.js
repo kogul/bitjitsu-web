@@ -16,12 +16,12 @@ $(document).ready(function () {
     core_redraw();
 });
 function core_redraw(){
+iter_no();
 clearf();
 createfood();
 createvirus();
 createbots();
 updatestat();
-iter_no();
 requestAnimationFrame(core_redraw);
 }
 
@@ -35,10 +35,7 @@ iter_no();
 draw =0;
 }
 function iter_no(){
-	ctx.beginPath();
-	ctx.font="15px Monospace";
-	ctx.fillStyle = "#FC0";
-	ctx.fillText("#"+stat,0,15);
+    $('#iter_num').html('#'+stat);
 }
 function clearf(){
     if(play||draw){

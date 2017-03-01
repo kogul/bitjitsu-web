@@ -16,13 +16,13 @@ $(document).ready(function () {
     core_redraw();
 });
 function core_redraw(){
-	findbot();
+    findbot();
 clearcan();
-iter_no();
 createfood();
 createvirus();
 createbots();
 updatestat();
+iter_no();
 requestAnimationFrame(core_redraw);
 }
 
@@ -61,10 +61,7 @@ function createvirus() {
 }
 }
 function iter_no(){
-     ctx.beginPath();
-     ctx.font="15px Monospace";
-     ctx.fillStyle = "green";
-     ctx.fillText("#"+stat,0,15);
+     $('#iter_num').html('#'+stat);
 }
 function createbots() {
     //for (var i=0; i<ob.bots.length; i++){
