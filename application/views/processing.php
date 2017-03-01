@@ -1,4 +1,4 @@
-<script src="<?php echo base_url('/application/Assets/Js/Process.js') ?>"></script>
+<script src="<?php echo base_url('/application/Assets/Js/process.js') ?>"></script>
 
 <div class="col-md-offset-1 col-md-10 contarea">
     <div class="col-md-12 pwrap">

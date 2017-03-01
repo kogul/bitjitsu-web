@@ -9,10 +9,11 @@ $(document).ready(function(){
 });
  function updatelb() {
     $.ajax({
-        url: "/index.php/user/update",
+        url: "/user/update",
         type: "post",
         dataType: "html",
         success: function (data) {
+            console.log(data);
             $('.replace').replaceWith(data);
         }
     });

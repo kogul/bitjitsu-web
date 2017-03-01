@@ -1,4 +1,8 @@
 <?php
+$GLOBALS['redir_base']="";
+$GLOBALS['game_hostname']="foss.amritanet.edu:8888";
+$GLOBALS['rate_limit']=30;
+$GLOBALS['submission_dir']="/bitjitsu-web/submissions/";
 class user extends CI_Controller{
 
     function index(){
@@ -19,7 +23,7 @@ class user extends CI_Controller{
     }
     function login(){
         if($this->session->userdata('logged_in')){
-            redirect('/');
+            redirect($GLOBALS['redir_base'].'/');
         }
         $data['pagetitle']="Login";
         $data['userdata']=$this->session->userdata();
@@ -27,7 +31,7 @@ class user extends CI_Controller{
         if($_POST){
             $post = filter_var_array($_POST,FILTER_SANITIZE_STRING);
             if(strlen($post['pass'])>6) {
-                $pass = md5($post['pass']);;
+                $pass = md5($post['pass']);
                 $this->load->model("login");
                 $udata=$this->login->ulogin($post['usrname'],$pass);
                 unset($udata['passwd']);
@@ -36,7 +40,7 @@ class user extends CI_Controller{
                 }else {
                     $udata['logged_in'] = TRUE;
                     $this->session->set_userdata($udata);
-                    redirect('/');
+                    redirect($GLOBALS['redir_base'].'/');
                 }
             }else{
                 $data['msg'] = "Invalid password";
@@ -47,7 +51,7 @@ class user extends CI_Controller{
     }
     function gameplay(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $data['file']= $this->input->get('json');
         $data['pagetitle'] = "Gameplay";
@@ -58,7 +62,7 @@ class user extends CI_Controller{
     }
     function spectator(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         $data['pagetitle'] = "Spectator";
         $data['file']= $this->input->get('json');
@@ -69,13 +73,14 @@ class user extends CI_Controller{
     }
     function submission(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
         date_default_timezone_set('Asia/Kolkata');
         $data['pagetitle'] = "Submission";
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
+
         $id = $this->session->userdata('id');
         if($_POST) {
             $plat = $this->input->post('platform');
@@ -90,7 +95,7 @@ class user extends CI_Controller{
             $file = $_FILES["filesub"]["name"];
             $tfile = $_FILES["filesub"]["tmp_name"];
             $ext = pathinfo($file, PATHINFO_EXTENSION);
-            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < 20)) {
+            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < $GLOBALS['rate_limit'])) {
                 if (($hour > 1 || $mins > 30)) {
                     $this->verify->resetrate($id);
                 }
@@ -98,7 +103,7 @@ class user extends CI_Controller{
                     "team_id" => intval($this->session->userdata('id'))
                 );
                 $obj = json_encode($obj);
-                $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                $url = 'http://'.$GLOBALS['game_hostname'].'/api/getfilename/';
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $obj);
@@ -110,8 +115,9 @@ class user extends CI_Controller{
 
                 $resp = curl_exec($ch);
                 $resp = json_decode($resp);
-                $target = base_url("/bitjitsu-web/Submissions/");
+                $target = base_url($GLOBALS['submission_dir']);
                 $file = $resp->data;
+
                 if (move_uploaded_file($tfile, $target . $file)) {
                     $cont = file_get_contents($target . $file);
                     $cont = md5($cont);
@@ -130,8 +136,7 @@ class user extends CI_Controller{
                         $this->verify->uprate($id);
                         $data['msg'] = "Your file has been uploaded";
                         $data['mtype'] = "success";
-                        redirect('/user/processing');
-
+                        redirect($GLOBALS['redir_base'].'/user/processing');
                     } else {
                         if (strcmp($cont, $oldcont['checksum'])) {
                             $old = $this->verify->getsource($id);
@@ -149,7 +154,7 @@ class user extends CI_Controller{
 
                             $data['msg'] = "Your file has been uploaded";
                             $data['mtype'] = "success";
-                            redirect('/user/processing');
+                            redirect($GLOBALS['redir_base'].'/user/processing');
                         } else {
                             unlink($target.$file);
                             $data['msg'] = "This file has been submitted already";
@@ -162,7 +167,7 @@ class user extends CI_Controller{
                 }
             }
         else{
-                $data['msg'] = "You can make only 2 submissions in 30 minutes.";
+                $data['msg'] = "You can make only ".$GLOBALS['rate_limit']." submissions in 30 minutes.";
                 $data['mtype'] = "error";
             }
         }
@@ -171,7 +176,7 @@ class user extends CI_Controller{
     }
     function processing(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/');
+            redirect($GLOBALS['redir_base'].'/');
         }
         $data['pagetitle'] = "Processing";
         $this->load->model("login");
@@ -183,13 +188,12 @@ class user extends CI_Controller{
     }
     function inewsub(){
         if(!($this->session->userdata('logged_in'))){
-            redirect('/user/login');
+            redirect($GLOBALS['redir_base'].'/user/login');
         }
-        $this->load->model("verify");
         $id = $this->session->userdata('id');
             $obj = array('team_id' => intval($id));
             $obj = json_encode($obj);
-            $url = "http://foss.amritanet.edu:8888/api/newsub/";
+            $url = "http://".$GLOBALS['game_hostname']."/api/newsub/";
             $ch = curl_init($url);
             curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
             curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -199,6 +203,7 @@ class user extends CI_Controller{
                     'Content-Length: '.strlen($obj))
             );
             $resp = curl_exec($ch);
+            header('Content-type:application/json;charset=utf-8');
             echo $resp;
     }
     function track(){
@@ -207,7 +212,7 @@ class user extends CI_Controller{
         }
         $gid = $this->input->post('game_id');
         $obj= json_encode($gid);
-        $url = "http://foss.amritanet.edu:8888/api/track/";
+        $url = "http://".$GLOBALS['game_hostname']."/api/track/";
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
         curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -217,15 +222,17 @@ class user extends CI_Controller{
                 'Content-Length: '.strlen($obj))
         );
         $resp = curl_exec($ch);
+        header('Content-type:application/json;charset=utf-8');
         echo $resp;
     }
-    function getsummery(){
+    function getsummary(){
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
         $gid = $this->input->post('game_id');
         $this->load->model("leader");
         $summery = $this->leader->getsum($gid);
+        header('Content-type:application/json;charset=utf-8');
         echo json_encode($summery);
     }
     function selectcount(){
@@ -268,6 +275,12 @@ class user extends CI_Controller{
     function logout(){
         $this->session->unset_userdata($this->session->userdata('id'));
         $this->session->sess_destroy();
-        redirect('/');
+        redirect($GLOBALS['redir_base'].'/');
+    }
+    
+    function fuck(){
+        $this->load->model("verify");
+        $rr = $this->verify->getFileName(1);
+        echo $rr;
     }
 }
