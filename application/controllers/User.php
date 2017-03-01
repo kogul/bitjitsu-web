@@ -1,5 +1,8 @@
 <?php
 $GLOBALS['redir_base']="/bitjitsu";
+$GLOBALS['game_hostname']="foss.amritanet.edu:8888";
+$GLOBALS['rate_limit']=30;
+$GLOBALS['submission_dir']="/var/www/bitjitsu/2017/public/submissions/";
 class user extends CI_Controller{
 
     function index(){
@@ -19,7 +22,6 @@ class user extends CI_Controller{
         $this->load->view("footer");
     }
     function login(){
-        #$GLOBALS['redir_base']="/bitjitsu";
         if($this->session->userdata('logged_in')){
             redirect($GLOBALS['redir_base'].'/');
         }
@@ -29,7 +31,7 @@ class user extends CI_Controller{
         if($_POST){
             $post = filter_var_array($_POST,FILTER_SANITIZE_STRING);
             if(strlen($post['pass'])>6) {
-                $pass = md5($post['pass']);;
+                $pass = md5($post['pass']);
                 $this->load->model("login");
                 $udata=$this->login->ulogin($post['usrname'],$pass);
                 unset($udata['passwd']);
@@ -78,6 +80,7 @@ class user extends CI_Controller{
         $id = $this->session->userdata('id');
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
+
         $id = $this->session->userdata('id');
         if($_POST) {
             $plat = $this->input->post('platform');
@@ -89,13 +92,13 @@ class user extends CI_Controller{
             $split_time = $newsub->diff($oldsub);
             $hour = $split_time->format("%H");
             $mins = $split_time->format("%i");
-            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < 2)) {
+            if (($hour > 1 || $mins > 30) || ($hour < 1 && $mins < 30 && $lastsub['rate_limit'] < $GLOBALS['rate_limit'])) {
                 if (($hour > 1 || $mins > 30)) {
                     $this->verify->resetrate($id);
                 }
                 $file = $_FILES["filesub"]["name"];
                 $tfile = $_FILES["filesub"]["tmp_name"];
-                $target = base_url("/bitjitsu-web/Submissions/");
+                $target = base_url($GLOBALS['submission_dir']);
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
                 $file = "file" . $this->session->userdata('id') . "." . $ext;
                 if (move_uploaded_file($tfile, $target . $file)) {
@@ -110,20 +113,12 @@ class user extends CI_Controller{
                             'platform' => $plat,
                             'time_sub' => date('m/d/Y G:i:s')
                         );
-                        $this->verify->inshash($fileinf);
-                        $this->verify->setdirty($id);
-                        $this->verify->uprate($id);
-                        $data['msg'] = "Your file has been uploaded";
-                        $data['mtype'] = "success";
 
-                        //make api call
-                        //get filename
-                        //rename()
                         $obj = array("extension" => $ext,
                             "team_id" => intval($this->session->userdata('id'))
                         );
                         $obj = json_encode($obj);
-                        $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                        $url = 'http://'.$GLOBALS['game_hostname'].'/api/getfilename/';
                         $ch = curl_init($url);
                         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
                         curl_setopt($ch, CURLOPT_POSTFIELDS, $obj);
@@ -136,10 +131,18 @@ class user extends CI_Controller{
                         $resp = curl_exec($ch);
                         $resp = json_decode($resp);
                         $oldfile = $target . 'file' . $this->session->userdata('id') . "." . $ext;
+                        $old_submission = $this->verify->getFileName($this->session->userdata('id'));
                         if (!rename($oldfile, $target . $resp->data)) {
                             copy($oldfile, $target . $resp->data);
                             unlink($oldfile);
+                            unlink($old_submission);
                         }
+                        $this->verify->inshash($fileinf);
+                        $this->verify->setdirty($id);
+                        $this->verify->uprate($id);
+                        $data['msg'] = "Your file has been uploaded";
+                        $data['mtype'] = "success";
+                        $this->verify->upFileName($id, $resp->data);
                         redirect($GLOBALS['redir_base'].'/user/processing');
 
                     } else {
@@ -160,7 +163,7 @@ class user extends CI_Controller{
                                 "team_id" => intval($this->session->userdata('id'))
                             );
                             $obj = json_encode($obj);
-                            $url = 'http://foss.amritanet.edu:8888/api/getfilename/';
+                            $url = 'http://'.$GLOBALS['game_hostname'].'/api/getfilename/';
                             $ch = curl_init($url);
                             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
                             curl_setopt($ch, CURLOPT_POSTFIELDS, $obj);
@@ -173,10 +176,13 @@ class user extends CI_Controller{
                             $resp = curl_exec($ch);
                             $resp = json_decode($resp);
                             $oldfile = $target . 'file' . $this->session->userdata('id') . "." . $ext;
+                            $old_submission = $this->verify->getFileName($this->session->userdata('id'));
                             if (!rename($oldfile, $target . $resp->data)) {
                                 copy($oldfile, $target . $resp->data);
                                 unlink($oldfile);
+                                unlink($old_submission);
                             }
+                            $this->verify->upFileName($id, $resp->data);
                             redirect($GLOBALS['redir_base'].'/user/processing');
                         } else {
                             $data['msg'] = "This file has been submitted already";
@@ -189,7 +195,7 @@ class user extends CI_Controller{
                 }
             }
         else{
-                $data['msg'] = "You can make only 2 submissions in 30 minutes.";
+                $data['msg'] = "You can make only ".$GLOBALS['rate_limit']." submissions in 30 minutes.";
                 $data['mtype'] = "error";
             }
         }
@@ -212,11 +218,10 @@ class user extends CI_Controller{
         if(!($this->session->userdata('logged_in'))){
             redirect($GLOBALS['redir_base'].'/user/login');
         }
-        $this->load->model("verify");
         $id = $this->session->userdata('id');
             $obj = array('team_id' => intval($id));
             $obj = json_encode($obj);
-            $url = "http://foss.amritanet.edu:8888/api/newsub/";
+            $url = "http://".$GLOBALS['game_hostname']."/api/newsub/";
             $ch = curl_init($url);
             curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
             curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -226,6 +231,7 @@ class user extends CI_Controller{
                     'Content-Length: '.strlen($obj))
             );
             $resp = curl_exec($ch);
+            header('Content-type:application/json;charset=utf-8');
             echo $resp;
     }
     function track(){
@@ -234,7 +240,7 @@ class user extends CI_Controller{
         }
         $gid = $this->input->post('game_id');
         $obj= json_encode($gid);
-        $url = "http://foss.amritanet.edu:8888/api/track/";
+        $url = "http://".$GLOBALS['game_hostname']."/api/track/";
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
         curl_setopt($ch,CURLOPT_POSTFIELDS,$obj);
@@ -244,15 +250,17 @@ class user extends CI_Controller{
                 'Content-Length: '.strlen($obj))
         );
         $resp = curl_exec($ch);
+        header('Content-type:application/json;charset=utf-8');
         echo $resp;
     }
-    function getsummery(){
+    function getsummary(){
         if(!($this->session->userdata('logged_in'))){
             redirect('/user/login');
         }
         $gid = $this->input->post('game_id');
         $this->load->model("leader");
         $summery = $this->leader->getsum($gid);
+        header('Content-type:application/json;charset=utf-8');
         echo json_encode($summery);
     }
     function selectcount(){
@@ -296,5 +304,11 @@ class user extends CI_Controller{
         $this->session->unset_userdata($this->session->userdata('id'));
         $this->session->sess_destroy();
         redirect($GLOBALS['redir_base'].'/');
+    }
+    
+    function fuck(){
+        $this->load->model("verify");
+        $rr = $this->verify->getFileName(1);
+        echo $rr;
     }
 }

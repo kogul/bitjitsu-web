@@ -2,8 +2,9 @@ var len = 0,i=0,j=1;
 var done = new Array();
 var ob, back;
 $(document).ready(function() {
+    console.log("will do sub");
     $.ajax({
-        url: "/user/inewsub",
+        url: "/bitjitsu/user/inewsub",
         type: "post",
         dataType: "json",
         success: function (data) {
@@ -21,12 +22,16 @@ $(document).ready(function() {
                     track(data.data.game_ids[i], ob);
                 }, 1000);
 
-            }
+        },
+        error: function(d){
+            console.log(d);
+            alert('fail');
+        }
     })
 });
 function track(gid,ob){
     $.ajax({
-        url: "/user/track",
+        url: "/bitjitsu/user/track",
         type:"post",
         data: {game_id:gid},
         dataType: "json",
@@ -45,8 +50,8 @@ function track(gid,ob){
                 $('#replay'+i).html('waiting');
             }
             if(data.data == 'completed'){
-                $('#replay'+i).html('<a target="_blank" href="/index.php/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a>');
-                getsummery(gid,i);
+                $('#replay'+i).html('<a target="_blank" href="/bitjitsu/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a>');
+                getsummary(gid,i);
                 if(done.length == 1){
                     clearint();
                 }
@@ -80,9 +85,9 @@ function seti() {
 function clearint() {
    clearInterval(ob);
 }
-function getsummery(gid,num){
+function getsummary(gid,num){
     $.ajax({
-        url:"/user/getsummery",
+        url:"/bitjitsu/user/getsummary",
         type:"post",
         data: {game_id: gid},
         dataType: "json",

@@ -44,18 +44,20 @@
     </div>
 </div>
 <div class="col-md-12 awrap">
-    <p>The aim of the event is to create an Artificial Intelligence (bot) to play this online strategy game on your behalf. Imbue your bot with an excellent strategy, to help it in this battle for domination, against other bots in the arena! Whether you are a beginning programmer or an expert, this is sure to be a great learning experience (with cool cash prizes!). Moreover it's a long challenge and you can take your time updating your submissions and review your bot's actions, live. Take your time in cooking up a cunning strategy and implementing it.</p>
-    <h4>THIS IS A TEAM EVENT OF 1 UPTO 3 MEMBERS</h4>
+    <p>The aim of the event is to create an Artificial Intelligence (bot) to play this online strategy game on your behalf. Imbue your bot with an excellent strategy, to help it in this battle for domination, against other bots in the arena!<br>
+    Whether you are a beginning programmer or an expert, this is sure to be a great learning experience (with cool cash prizes!).<br>
+    You can update your submissions at anytime and review your bot's actions, live. Take your time in cooking up a cunning strategy and implementing it.</p>
+    <h4>THIS IS A TEAM EVENT OF 1 TO 3 MEMBERS</h4>
 </div>
-<div class="col-md-12 register">
+<div id="anokha-reg-box" class="col-md-12 register">
     <h1>Register And Form A Team</h1>
     <hr/>
     <div class="col-md-offset-1 col-md-4 rp">
-        <a target="_blank" href="https://anokha.amrita.edu/"><h3>Register With Anokha</h3></a>
+        <a target="_blank" href="https://anokha.amrita.edu/events/E1700036"><h3>Register With Anokha</h3></a>
         <hr/>
         <img src="<?php echo base_url('/application/Assets/Css/Bg-Images/register.jpg'); ?>">
     </div>
-    <div class="col-md-offset-2 col-md-4 rp">
+    <div id="gform-reg-box" class="col-md-offset-2 col-md-4 rp">
         <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScn39Qz0_xqdov7hdb_WMrqrBcHSoTmgb0L_AM27J68SaicDg/viewform"><h3>Fill The Google Form</h3></a>
         <hr/>
         <img src="<?php echo base_url('/application/Assets/Css/Bg-Images/form.jpg'); ?>">
@@ -63,16 +65,52 @@
 </div>
 <div class="col-md-12 gamedes">
     <div class="col-md-offset-1 col-md-10 gcont">
-        <h3>The Game</h3>
+        <h3>The Game is based on Agar.io</h3>
         <hr>
-        <h4>This game is based on Agar.io.</h4>
-        <p>Agar.io is an addictive multiplayer game where you - as the player - can increase the mass of your cell(or cells) by eating other player's cells. The word "Agar" is the name of the cell wall of certain algae. The goal of the game is to obtain the largest cell; players restart when all of their cells are swallowed by another player. Players can change their cell's appearance with predefined words, phrases, symbols or skins.</p>
-        <p>Viruses split cells larger than them into many pieces (16 or less, depending on the mass) and smaller cells can hide underneath a virus for protection against larger cells. Cells in 16 pieces can eat viruses without splitting. Viruses are normally randomly generated, but players can make new viruses by ejecting a small fraction of a player's cell's mass into the virus a few times, causing the virus to split up.
-            Players can split their cell into two, and one of the two evenly divided cells will be flung in the direction of the cursor (a maximum of 16 split cells). This can be used as a ranged attack to swallow other smaller cells, to escape an attack from another cell, or to move more quickly around the map. Split cells eventually merge back into one cell. Aside from feeding viruses, players can eject (release) a small fraction of their mass to feed other cells. A player can also eject mass to trick enemies into coming closer to the player. Once an enemy cell is close enough, the player can split his/her cell to eat the baited enemy.
+        <h4 style="text-align: center;">About Agar.io</h4>
+        <p>The word "Agar" is the name of the cell wall of certain algae.<br>
+        Agar.io is an addictive online multiplayer game where you - as the player - control a single cell in the begining.<br></p>
+        <blockquote>Hereafter, the words blobs and cells are used interchangeably, and mean the same.</blockquote>
+        <p>The aim is to become the largest cell in the arena by eating other player's cells and randomly spawned food.<br>
+        <b>In the original implementation</b>, players restart when all of their cells are swallowed by another player, but not in our implementation.</p>
+        <p>Special entities like <i>Viruses</i> can split cells larger than them into many pieces<sup class="conditions"><a href="#no-of-splits">1</a></sup> (depending on the mass) and smaller cells can hide underneath a virus for protection against larger cells.<br>
+        Viruses are normally randomly generated, but players can make new viruses by ejecting a small fraction of a player's cell's mass into the virus a few times, causing the virus to split up (just like normal cells do).<br>
+        Players can split their cell into two, and one of the two evenly divided cells will be flung in the direction of the cursor. Any no. of splits can be made<sup class="conditions"><a href="#no-of-splits">1</a></sup>, subject to the upper bound of 16 cells on the arena. The game is centered around this versatile move, which can be used,</p>
+        <ul>
+            <li>to mount a <i>ranged attack</i> to swallow other smaller cells,</li>
+            <li>to escape an attack from another cell,</li>
+            <li>to move more quickly around the map.</li>
+        </ul>
+        <p>
+        Cells of a player can be merged back into each other cell<sup class="conditions"><a href="#merging-n-splitting">2</a></sup>.</p>
+        <p>Aside from feeding viruses, players can eject (release) a small fraction of their mass to feed other cells or just throw it back as food.<br>
+        A common strategy is to eject mass and tricking enemies into coming closer to the player. Once an enemy cell is close enough, the player can split his/her cell to eat the baited enemy.
         </p>
-        <h4>But We Differ</h4>
-        <p>Force Field. Either in a circular or square fashion is a water stream, which slows down your blob(cell) and keeps you moving in the stream unless your tendency to move out is greater than the existing force field. We also allow you to control your blobs separately when a virus splits you.</p>
-
+        <hr>
+        <h4 style="text-align: center;">Yet we differ,</h4>
+        <p>The game implementation for this event is inspired by Agar.io, but it is not <i>just another port of a popular game</i> The most obvious differences are:</p>
+        <ol>            
+            <li><h4>Independent cells</h4>
+            The original game and most "forks" don't allow you to control all cells in your control. All cells flock around one of the cells and move/operate in sync.
+            <i>We also allow you to control your blobs separately when a virus splits you or you decide to split a cell.</i></li>
+            <li><h4>Splits are symmetric</h4>
+            Cells always split in to 2 equal halves, unlike agar.io.</li>
+            <li><h4>Merge whenever you want</h4>
+            Agar.io places some restrictions on merging cells, we don't<sup class="conditions"><a href="#no-of-splits">1</a></sup>.</li>
+            <li><h4>Viruses are static</h4>
+            Player cannot <i>feed</i> viruses and create new ones.</li>
+            <li><h4>Direction of <i>ejected mass</i></h4>
+            Is clearly defined as the opposite of current movement direction.</li>            
+        </ol>
+        <p>A detailed list of differences is available in the Documentation section.</p>
+        
+        <h3>Getting started</h3>
+        <p>We strongly recommend that you play the Agar.io game on your browser before reading the documentation.</p>
+        <ol>
+            <li>You must register your team on the <a href="#anokha-reg-box"><span class="anokha">anokha</span> 2017 site</a> <b>to recieve a password for this site, to access the Documentation</b>. Please fill <a href="#gform-reg-box">this form</a>.</li>
+            <li>Try out the tutorial and submit a dumb bot, and keep making it better.</li>
+        </ol>
+        </p>
     </div>
 </div>
 <div class="col-md-12 glink">
@@ -90,19 +128,37 @@
 <div class="col-md-12 fewmore">
   <h1>And a few more</h1>
     <hr/>
-    <div class="col-md-3 olink">
-        <a target="_blank" href="https://arrow.pythonanywhere.com/bit-jitsu/2016"><h3>The Archive</h3></a>
-        <hr>
-        <p>Have a look at the event that we conducted previously</p>
-    </div>
-    <div class="col-md-offset-1 col-md-4 olink">
-        <a target="_blank" href="<?php echo base_url('user/documentation/'); ?>"><h3>Documentation</h3></a>
-        <hr>
-        <p>See the documentation of this game and get your hands dirty</p>
-    </div>
-    <div class="col-md-offset-1 col-md-3 olink">
-        <a href="<?php echo base_url('user/resources/'); ?>"><h3>Resources</h3></a>
-        <hr>
-        <p>Checkout other AI Challenges and AI programming contests</p>
-    </div>
+    <a href="https://arrow.pythonanywhere.com/bit-jitsu/2016" target="_blank">
+        <div class="col-md-3 olink">
+            <h3>The Archive</h3>
+            <hr>
+            <p>Have a look at the event that we conducted in <span class="anokha">anokha</span> 2016</p>
+        </div>
+    </a>
+    <a href="#">
+        <div class="col-md-offset-1 col-md-4 olink">
+            <h3>Documentation</h3>
+            <hr>
+            <p>See the documentation of our game and get your hands dirty!</p>
+        </div>
+    </a>
+    <a href="<?php echo base_url('user/resources/'); ?>">
+        <div class="col-md-offset-1 col-md-3 olink">
+            <h3>Resources</h3>
+            <hr>
+            <p>Checkout other AI Challenges and AI programming contests</p>
+        </div>
+    </a>
+</div>
+<div class="col-md-12 footnote" style="height: auto">
+    <h4>Footnotes</h4>
+    <p id="no-of-splits">
+        <span>1</span>
+        An upper bound on the no. of blobs on the arena is 16. The no. of splits is unbounded, as cells can be merged.
+    </p>
+    <p id="merging-n-splitting">
+        <span>2</span>
+        A hunter blob must be slightly bigger than it's prey blob. Exact numbers are available in the docs.
+    </p>
+</div>
 </div>

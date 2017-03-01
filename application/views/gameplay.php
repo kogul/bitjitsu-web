@@ -28,7 +28,7 @@
             <option value="5" selected>5</option>
             <option value="10">10</option>
         </select></div>
-    <script src="<?php echo base_url('/Json/'.$file.'.js') ?>"></script>
+    <script src="<?php echo base_url('/replays/'.$file.'.js') ?>"></script>
     <script src="<?php echo base_url('/application/Assets/Js/Gameplay/gameplay.js') ?>"></script>
 
 </div>

@@ -23,6 +23,11 @@
 	src: url("Fonts/Chathura-Regular.ttf") format("truetype");
 }
 
+@font-face{
+	font-family:"SpinCycle";
+	src: url("Fonts/SpinCycle.ttf") format("truetype");
+}
+
 .header{
 	color: #FC0;
 	background-color: #000000;
@@ -279,6 +284,7 @@ tr{
 .res ul li a:hover{
 	color: #FC0;
 }
+
 .player{
 	width: auto !important;
 }
@@ -301,6 +307,7 @@ tr{
 	font-family: "Yanone";
 	font-size: 30px;
 }
+
 .pwrap p{
 	font-size: 40px;
 }
