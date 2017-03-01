@@ -110,20 +110,23 @@ $(document).ready(function(){
   
    $('body').keydown(function(e){
     if(e.keyCode == '32'){
+      e.preventDefault();
       play = !play;
      }
     if(!play){
 
-    if(e.keyCode == '68'){
-        console.log(fr);
-        console.log(stat);
-      if((stat-fr)>0){
-      stat-=fr;
-      draw=1;
-      drew();
-    }
-     }
     if(e.keyCode == '65'){
+      e.preventDefault();
+      console.log(fr);
+      console.log(stat);
+      if((stat-fr)>0){
+        stat-=fr;
+        draw=1;
+        drew();
+      }
+     }
+    if(e.keyCode == '68'){
+      e.preventDefault();
       console.log(stat);
       console.log(fr);
       if((stat + fr)<ob.length){

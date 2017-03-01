@@ -4,7 +4,7 @@ var ob, back;
 $(document).ready(function() {
     console.log("will do sub");
     $.ajax({
-        url: "/user/inewsub",
+        url: "/bitjitsu/user/inewsub",
         type: "post",
         dataType: "json",
         success: function (data) {
@@ -14,7 +14,7 @@ $(document).ready(function() {
                     $('.pwrap').css("padding-top", "10px");
                     $('.pwrap').html('<h1 class="animated flipInX">Replays</h1>');
                     $('.pwrap').append('<hr class="animated zoomIn">');
-                    $('.pwrap').append('<h4 class="oldredirect animated fadeInUp">Every game takes around 2 minutes. The game is running in a dual core server, 2 games in parallel. <a target="_blank" href="/user/selectcount">Click here to see your old replays</a></h4>');
+                    $('.pwrap').append('<h4 class="oldredirect animated fadeInUp">Every game takes around 2 minutes. The game is running in a dual core server, 2 games in parallel. <a target="_blank" href="/bitjitsu/user/selectcount">Click here to see your old replays</a></h4>');
                 }
                  $('.pwrap').append('<p class="animated slideInDown" id="replay'+ind+'">Loading</p>');
                  done[ind] = ind;
@@ -32,7 +32,7 @@ $(document).ready(function() {
 });
 function track(gid,ob){
     $.ajax({
-        url: "/user/track",
+        url: "/bitjitsu/user/track",
         type:"post",
         data: {game_id:gid},
         dataType: "json",
@@ -51,7 +51,7 @@ function track(gid,ob){
                 $('#replay'+i).html('waiting');
             }
             if(data.data == 'completed'){
-                $('#replay'+i).html('<a target="_blank" href="/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a>');
+                $('#replay'+i).html('<a target="_blank" href="/bitjitsu/user/gameplay/?json='+gid+'">Replay '+(i+1)+'</a>');
                 getsummary(gid,i);
                 if(done.length == 1){
                     clearint();
@@ -88,7 +88,7 @@ function clearint() {
 }
 function getsummary(gid,num){
     $.ajax({
-        url:"/user/getsummary",
+        url:"/bitjitsu/user/getsummary",
         type:"post",
         data: {game_id: gid},
         dataType: "json",

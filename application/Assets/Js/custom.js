@@ -9,7 +9,7 @@ $(document).ready(function(){
 });
  function updatelb() {
     $.ajax({
-        url: "/user/update",
+        url: "/bitjitsu/user/update",
         type: "post",
         dataType: "html",
         success: function (data) {
