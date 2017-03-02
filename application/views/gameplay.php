@@ -7,16 +7,27 @@
             <div class="col-md-4">
             <h3>Controls</h3>
             <hr>
-            <p>Spacebar: Pause/Resume</p>
-            <p>When Paused -  a:Next frame  d:previous frame</p>
-                <p>Frame skip rate can be chosen from the options given below</p>
+            <table class="table table-condensed mini" style="font-size: 40%;">
+                <thead><tr><th>Key</th><th>Action</th></tr></thead>
+                <tbody>
+                    <tr><td>Space</td><td>Pause / Resume</td></tr>
+                    <tr><td>A</td><td>Previous Frame</td></tr>
+                    <tr><td>D</td><td>Next Frame</td></tr>
+                </tbody>
+            </table> 
+            <p>When Paused, "Frame Skip Rate" can be chosen from the dropdown in the bottom.</p>
             </div>
             <div class="col-md-4">
-            <h3>Replay Specifications</h3>
+            <h3>Replay Legend</h3>
             <hr>
-            <p>Red: Food</p>
-            <p>Blue: Virus</p>
-            <p>Green: Bots</p>
+            <table class="table table-condensed mini">
+                <thead><tr><th>Colour</th><th>Entity</th></tr></thead>
+                <tbody>
+                    <tr><td>Red</td><td>Food</td></tr>
+                    <tr><td>Green</td><td>Bots</td></tr>
+                    <tr><td>Blue</td><td>Virus</td></tr>
+                </tbody>
+            </table> 
             </div>
             <div class="col-md-4">
                 <h3 id="iter_num"></h3>
@@ -35,7 +46,7 @@
             <option value="5" selected>5</option>
             <option value="10">10</option>
         </select></div>
-    <script src="<?php echo base_url('/replays/'.$file.'.js') ?>"></script>
-    <script src="<?php echo base_url('/application/Assets/Js/Gameplay/gameplay.js') ?>"></script>
+    <script type="application/javascript" src="<?php echo base_url('/replays/'.$file.'.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('/application/Assets/Js/Gameplay/gameplay.js') ?>"></script>
 
 </div>

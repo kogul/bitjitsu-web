@@ -42,9 +42,10 @@
 	font-size: 20px;
 }
 .head hr{
-   border: solid 1px #FC0;
-   width: 80%;
+	border: solid 1px #FC0;
+	width: 80%;
 	margin-bottom: 5px !important;
+	clear:both;
 }
 .head p{
 	font-family:"Chathura";
@@ -175,6 +176,20 @@
 .lcont{
 	text-align: center;
 }
+.mini th{
+	color: #FC0;
+	font-family: "Chathura";
+	text-align: center;
+	border: 0px !important;
+	font-size: 22px;
+}
+.mini td{
+	border-top: 0px !important;
+	font-family: "Yanone";
+	color: #FFF !important;
+	font-size: 16px;
+}
+
 th{
 	color: #FC0;
 	font-family: "Chathura";

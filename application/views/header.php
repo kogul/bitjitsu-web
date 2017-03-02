@@ -20,7 +20,7 @@
            echo "<div><a href='".base_url('/user/login')."'>Login</a></div>";
        }
           if((isset($userdata['logged_in']))){
-              echo  "<div><a href='#'>Package</a></div>";
+              echo  "<div><a href='https://drive.google.com/open?id=0By0rvNg9_qznVml0LUVhWl93OEU'>Package</a></div>";
               echo  "<div><a href='".base_url('/user/selectcount')."'>Replays</a></div>";
               echo  "<div><a href='".base_url('/user/submission')."'>Submission</a></div>";
               echo  "<div><a href='".base_url('/user/logout')."'>Logout</a></div>";
