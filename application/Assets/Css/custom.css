@@ -28,6 +28,14 @@
 	src: url("Fonts/SpinCycle.ttf") format("truetype");
 }
 
+.guide a{
+	color: #fff;
+}
+
+.guide a:hover{
+	color: #888;
+}
+
 .header{
 	color: #FC0;
 	background-color: #000000;

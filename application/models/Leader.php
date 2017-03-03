@@ -35,5 +35,22 @@ class leader extends CI_Model{
         $replays = $this->db->get();
         return $replays->result_array();
     }
+
+    function getlogs($gid){
+        $this->load->database();
+        $this->db->select("log_id");
+        $this->db->where("game_id",$gid);
+        $this->db->from("errorlogs");
+        $resp['error'] = $this->db->get()->result_array()[0]['log_id'];
+        $this->db->select("log_id");
+        $this->db->where("game_id",$gid);
+        $this->db->from("debuglogs");
+        $resp['debug'] = $this->db->get()->result_array()[0]['log_id'];
+        $this->db->select("log_id");
+        $this->db->where("game_id",$gid);
+        $this->db->from("movelogs");
+        $resp['move'] = $this->db->get()->result_array()[0]['log_id'];
+        return $resp;
+    }
 }
 ?>

@@ -31,10 +31,12 @@
             </div>
             <div class="col-md-4">
                 <h3 id="iter_num"></h3>
-
-                    <hr>
-                    <p><?php echo $summary; ?></p>
-
+                <hr>
+                <p><?php echo $summary; ?></p>
+                <h3>Logs</h3>
+                <p class="col-md-4"><?php echo "<a class='white-links' href='/game_logs/move/".$logs['move'].".js'>Moves</a>"; ?><br></p>
+                <p class="col-md-4"><?php echo "<a class='white-links' href='/game_logs/debug/".$logs['debug'].".js'>Debug</a>"; ?><br></p>
+                <p class="col-md-4"><?php echo "<a class='white-links' href='/game_logs/error/".$logs['error'].".js'>Error</a>"; ?><br></p>
             </div>
         </div>
     </div>

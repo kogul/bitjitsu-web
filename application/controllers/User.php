@@ -57,6 +57,8 @@ class user extends CI_Controller{
         $data['file']= $this->input->get('json');
         $sum = $this->leader->getsum($data['file']);
         $data['summary'] = $sum['summary'];
+        $logs = $this->leader->getlogs($data['file']);
+        $data['logs'] = $logs;
         $data['pagetitle'] = "Gameplay";
         $data['userdata']=$this->session->userdata();
         $this->load->view("header",$data);
@@ -241,9 +243,11 @@ class user extends CI_Controller{
         }
         $gid = $this->input->post('game_id');
         $this->load->model("leader");
-        $summery = $this->leader->getsum($gid);
+        $summary = $this->leader->getsum($gid);
+        $logs = $this->leader->getlogs($gid);
+        $summary['logs'] = $logs;
         header('Content-type:application/json;charset=utf-8');
-        echo json_encode($summery);
+        echo json_encode($summary);
     }
     function selectcount(){
         $data['pagetitle'] = "Replay";
@@ -288,4 +292,11 @@ class user extends CI_Controller{
         $this->session->sess_destroy();
         redirect($GLOBALS['redir_base'].'/');
     }
+/*
+    function fuck(){
+        $this->load->model("leader");
+        $gid = $this->input->get("id", TRUE);
+        echo json_encode($this->leader->getlogs($gid));
+    }
+    */
 }
